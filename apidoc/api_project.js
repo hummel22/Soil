@@ -1,0 +1,1 @@
+define({  "name": "Soil API",  "version": "0.0.1",  "description": "Api to acces soil humidity information",  "sampleUrl": false,  "defaultVersion": "0.0.0",  "apidoc": "0.3.0",  "generator": {    "name": "apidoc",    "time": "2017-04-02T17:34:37.930Z",    "url": "http://apidocjs.com",    "version": "0.17.5"  }});
