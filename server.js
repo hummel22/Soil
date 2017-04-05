@@ -6,16 +6,18 @@ app.use(bodyParser.json());
 
 var port = process.env.PORT || 8081
 
-app.get('/', function (req, res) {
-     res.send('Hello World');
-})
+require('./routes')(app)
 
 
-app.post('/', function (req, res) {
-     console.log("Got a POST request for the homepage");
-        res.send('Hello POST');
-})
 
+/**
+ *
+ * Route structure  - 
+ *  Api Routes are located in /api/-/index.js
+ *
+ *  View Routes are listed in routes.js
+ *    TODO view directorytree structure
+ */
 
 /**
  * @api {get} /user/:id Request User information
@@ -42,22 +44,11 @@ app.post('/', function (req, res) {
  *       "error": "UserNotFound"
  *     }
  */
-app.get('/list_user', function (req, res) {
-     console.log("Got a GET request for /list_user");
-     res.send('Page Listing');
-})
 
 
-
-app.use(express.static('apidoc'));
-app.get('/apidocs', function (req, res) {
-      console.log("Got a GET request for /apidocs");
-      res.sendFile(__dirname + "/apidoc/index.html");
-})    
-    
 
 var server = app.listen(port, function () {
      var host = server.address().address;
      var port = server.address().port;
-     console.log("Example app listening at http://%s:%s", host, port);
+     console.log("Soil Server listening at http://%s:%s", host, port);
 })
