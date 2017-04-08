@@ -2,6 +2,8 @@ var router = require('express').Router();
 var express = require('express');
 var fs = require('fs');
 
+//This should load all index.js files located in the api directory.
+//To extend the api you only need to add/edit those files
 var loadAPI = function(app, dirPath) {
   fs.readdirSync(__dirname + dirPath).forEach(function(file) {
     if (file === "index.js")    {
@@ -46,7 +48,8 @@ module.exports = function(app) {
    * API's
    */
   //app.use('/api', require('/api'))
-  
+ 
+ //All index.js files are auto loaded in api directory 
   loadAPI(app, "/api");
 
 
