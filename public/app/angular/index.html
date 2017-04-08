@@ -10,6 +10,8 @@
     <script src="/scripts/angular-animate.js"></script>
     <script src="/scripts/angular-material.js"></script>
     <script src="/angular/main.js"></script>
+    <script src="/angular/controllers/humidityListController.js"></script>
+    <script src="/angular/services/humidity.js"></script>
 
 </head>
 <body>
@@ -17,7 +19,6 @@
 <!--Main Webiste Content Here-->
 <div ng-include="'/angular/templates/navbar-material.html'"></div>
 <div class="highlight" ng-view></div>
-
 
 
 <!--Test Content Here-->
@@ -28,6 +29,21 @@
 </div>
 
 
+<div layout="column" layout-align="center center" ng-controller="mainController">
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1>Data Points: <span class="label label-info">{{ humidity.length }}</span></h1>
+        </div>
+    </div>
+
+    <div class="container" ng-repeat="humid in humidity">
+            <p>
+            <h3>Name: {{ humid.Name }} - Date: {{ humid.Date }} - ID: {{ humid.UniqueID }} - Humidity: {{ humid.Humidity
+                }}%</h3>
+            </p>
+    </div>
+
+</div>
 
 </body>
 </html>

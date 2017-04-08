@@ -1,3 +1,3 @@
 var app = angular.module('SoilApp', [
-'ngRoute', 'ngMaterial'
+'ngRoute', 'ngMaterial', 'humidityListController', 'humidityService'
 ]);
