@@ -25,10 +25,12 @@ module.exports = function(app) {
   /*
    *  API DocumentaionA - Auto generated
    */
-  app.use('/public/apidocs', express.static('apidocs'));
-  app.get('/apidocs', function (req, res) {
-        console.log("Got a GET request for /apidocs");
-  })    
+  app.use('/apidocs', express.static('public/apidocs'));
+  app.use('/', express.static('public/app'));
+  //app.get('/apidocs', function (req, res) {
+  //      console.log("Got a GET request for /apidocs");
+  //      res.sendFile(__dirname + '/public/apidocs/index.html');
+  //})    
 
 
   /**

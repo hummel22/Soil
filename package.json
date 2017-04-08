@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/hummel22/Soil#readme",
   "dependencies": {
+    "angular": "^1.6.4",
+    "angular-ui-bootstrap": "^2.5.0",
     "apidoc": "^0.17.5",
     "body-parser": "^1.17.1",
     "express": "^4.15.2"
