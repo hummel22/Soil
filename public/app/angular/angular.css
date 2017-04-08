@@ -1,0 +1,40 @@
+
+
+.humidity-data  {
+  min-width : 600px
+}
+
+.humidity-value {
+  margin : 0 0 0 0
+}
+
+.humidity-name {
+  margin : 0 0 0 0
+}
+
+md-card md-card-title md-card-title-text:only-child .md-subhead {
+  padding-top : 0px
+}
+
+.md-content-adjust {
+  margin-bottom : 0px;
+  padding-bottom : 0px
+}
+
+md-card md-card-title {
+  padding-bottom : 5px;
+}
+
+.humidity-actions {
+  margin-top : 4px;
+}
+
+
+
+.humidity-value.humidity-card-body {
+ float : right
+}
+
+.humidity-name.humidity-card-body  {
+  float : left
+}

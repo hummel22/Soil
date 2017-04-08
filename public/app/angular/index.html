@@ -12,6 +12,8 @@
     <script src="/angular/main.js"></script>
     <script src="/angular/controllers/humidityListController.js"></script>
     <script src="/angular/services/humidity.js"></script>
+    <link rel="stylesheet" href="/angular/angular.css"/>
+
 
 </head>
 <body>
@@ -37,10 +39,22 @@
     </div>
 
     <div class="container" ng-repeat="humid in humidity">
-            <p>
-            <h3>Name: {{ humid.Name }} - Date: {{ humid.Date }} - ID: {{ humid.UniqueID }} - Humidity: {{ humid.Humidity
-                }}%</h3>
-            </p>
+        <md-card md-theme="default" md-theme-watch class="humidity-data">
+            <md-card-title>
+                <md-card-title-text class ="humidity-title">
+                    <span class="md-headline">Humidity Point</span>
+                    <span class="md-subhead humidity-date">{{ humid.Date }}</span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content class="md-content-adjust" layout-align="end end">
+                <span class="humidity-value humidity-card-body">Humidity : {{ humid.Humidity }}%</span>
+                <span class="humidity-name humidity-card-body">Name : {{ humid.Name }}</span>
+            </md-card-content>
+            <md-card-actions class="humidity-actions" layout="row" layout-align="end center">
+                <md-button>Delete</md-button>
+                <md-button>Edit</md-button>
+            </md-card-actions>
+        </md-card>
     </div>
 
 </div>
