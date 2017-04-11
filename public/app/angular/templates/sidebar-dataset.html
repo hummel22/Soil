@@ -17,7 +17,15 @@
                     </div>
                 </div>
 
-                <div class="container" ng-repeat="humid in humidity">
+                <div layout="row" layout-align="space-between center">
+                    <md-select ng-model="dataSort" placeholder="SortBy" class="md-no-underline" required md-no-asterisk="false">
+                        <md-option value="Date">Date</md-option>
+                        <md-option value="Humidity">Humidity</md-option>
+                        <md-option value="Name">Name</md-option>
+                    </md-select>
+                </div>
+
+                <div class="container" ng-repeat="humid in humidity | orderBy:dataSort">
                     <md-card md-theme="default" md-theme-watch class="humidity-data">
                         <md-card-title>
                             <md-card-title-text class="humidity-title">
