@@ -1,7 +1,7 @@
 
 
 .humidity-data  {
-  min-width : 600px
+  min-width : 270px
 }
 
 .humidity-value {
@@ -37,4 +37,8 @@ md-card md-card-title {
 
 .humidity-name.humidity-card-body  {
   float : left
+}
+
+h2.title-text {
+  margin-left : 25px;
 }

@@ -1,0 +1,41 @@
+<div flex>
+    <md-sidenav class="md-sidenav-right" md-component-id="right" >
+        <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools"  layout="row" layout-align="end center" >
+                <div ng-controller="datasetViewToggler">
+                    <md-button class="md-raised" aria-label="Learn More" ng-click="toggleDataSet()">
+                        Close
+                    </md-button>
+                </div>
+            </div>
+        </md-toolbar>
+        <md-content layout-padding>
+            <div layout="column" layout-align="center center" ng-controller="mainController">
+                <div class="container">
+                    <div class="jumbotron text-center">
+                        <h1>Data Points: <span class="label label-info">{{ humidity.length }}</span></h1>
+                    </div>
+                </div>
+
+                <div class="container" ng-repeat="humid in humidity">
+                    <md-card md-theme="default" md-theme-watch class="humidity-data">
+                        <md-card-title>
+                            <md-card-title-text class="humidity-title">
+                                <!--<span class="md-headline">Humidity Point</span>-->
+                                <span class="md-subhead humidity-date">{{ humid.Date }}</span>
+                            </md-card-title-text>
+                        </md-card-title>
+                        <md-card-content class="md-content-adjust" layout-align="end end">
+                            <span class="humidity-value humidity-card-body">Humidity : {{ humid.Humidity }}%</span>
+                            <span class="humidity-name humidity-card-body">Name : {{ humid.Name }}</span>
+                        </md-card-content>
+                        <md-card-actions class="humidity-actions" layout="row" layout-align="end center">
+                            <md-button>Delete</md-button>
+                            <md-button>Edit</md-button>
+                        </md-card-actions>
+                    </md-card>
+                </div>
+            </div>
+        </md-content>
+    </md-sidenav>
+</div>
