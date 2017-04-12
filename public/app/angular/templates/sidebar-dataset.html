@@ -2,12 +2,19 @@
     <md-sidenav class="md-sidenav-right" md-component-id="right" >
         <md-toolbar class="md-hue-2">
             <div class="md-toolbar-tools"  layout="row" layout-align="end center" >
-                <div ng-controller="datasetViewToggler">
-                    <md-button class="md-raised" aria-label="Learn More" ng-click="toggleDataSet()">
+                <div ng-controller="showDialogController">
+                    <md-button class="md-raised" aria-label="Add Point" ng-click="showAddDialog($event)">
+                        Add Point
+                    </md-button>
+                </div>
+                <span flex></span>
+                <div ng-controller="sideBarController">
+                    <md-button class="md-raised" aria-label="Learn More" ng-click="toggleSideBar()">
                         Close
                     </md-button>
                 </div>
             </div>
+
         </md-toolbar>
         <md-content layout-padding>
             <div layout="column" layout-align="center center" ng-controller="mainController">
@@ -21,7 +28,7 @@
                     <md-select ng-model="dataSort" placeholder="SortBy" class="md-no-underline" required md-no-asterisk="false">
                         <md-option value="Date">Date</md-option>
                         <md-option value="Humidity">Humidity</md-option>
-                        <md-option value="Name">Name</md-option>
+                        <md-option value="Sensor">Name</md-option>
                     </md-select>
                 </div>
 
@@ -35,7 +42,7 @@
                         </md-card-title>
                         <md-card-content class="md-content-adjust" layout-align="end end">
                             <span class="humidity-value humidity-card-body">Humidity : {{ humid.Humidity }}%</span>
-                            <span class="humidity-name humidity-card-body">Name : {{ humid.Name }}</span>
+                            <span class="humidity-name humidity-card-body">Sensor : {{ humid.Sensor }}</span>
                         </md-card-content>
                         <md-card-actions class="humidity-actions" layout="row" layout-align="end center">
                             <md-button>Delete</md-button>

@@ -8,35 +8,45 @@
 //
 
 angular.module('humidityService', [])
+
   .factory('Humidity', function() {
+    var data = [
+                         {
+                           "Date" : "01/02/2017 11:33",
+                           "UniqueID" : 0,
+                           "Sensor" : "Stone",
+                           "Humidity" : 84,
+                           "Type" : "Humidity"
+                         },
+                         {
+                           "Date" : "01/02/2017 12:33",
+                           "UniqueID" : 1,
+                           "Sensor" : "Stone",
+                           "Humidity" : 21,
+                           "Type" : "Humidity"
+                         },
+                         {
+                           "Date" : "01/02/2017 14:33",
+                           "UniqueID" : 2,
+                           "Sensor" : "Stone",
+                           "Humidity" : 56,
+                           "Type" : "Humidity"
+                         },
+                         {
+                           "Date" : "01/02/2017 18:33",
+                           "UniqueID" : 03,
+                           "Sensor" : "Stone",
+                           "Humidity" :36,
+                           "Type" : "Humidity"
+                         }
+                       ]
+
     return {
       get : function () {
-        return [
-          {
-            "Date" : "01/02/2017 11:33",
-            "UniqueID" : 0,
-            "Name" : "Stone Sensor",
-            "Humidity" : 84
-          },
-          {
-            "Date" : "01/02/2017 12:33",
-            "UniqueID" : 1,
-            "Name" : "Stone Sensor",
-            "Humidity" : 21
-          },
-          {
-            "Date" : "01/02/2017 14:33",
-            "UniqueID" : 2,
-            "Name" : "Gray Sensor",
-            "Humidity" : 56
-          },
-          {
-            "Date" : "01/02/2017 18:33",
-            "UniqueID" : 03,
-            "Name" : "Stone Sensor",
-            "Humidity" :36
-          }
-        ]
+        return data;
+      },
+      put : function (newData) {
+        data.push(newData)
       }
     }
   });

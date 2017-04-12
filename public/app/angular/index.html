@@ -11,8 +11,8 @@
     <script src="/scripts/angular-material.js"></script>
     <script src="/angular/main.js"></script>
     <script src="/angular/controllers/humidityListController.js"></script>
-    <script src="/angular/controllers/datasetViewController.js"></script>
-
+    <script src="/angular/controllers/sideBarController.js"></script>
+    <script src="/angular/controllers/addDialogController.js"></script>
     <script src="/angular/services/humidity.js"></script>
     <link rel="stylesheet" href="/angular/angular.css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -32,6 +32,18 @@
         <p> Enter Data Here: <input type="text" ng-model="data"></p>
         <p> Text Entered: {{data}}</p>
         <p>Nothing here {{'yet' + '!'}}</p>
+
+        <div  ng-controller="newPointMonitor">
+            <b layout="row" layout-align="center center" class="md-padding">
+                {{ newPoint.Sensor }}
+            </b>
+            <b layout="row" layout-align="center center" class="md-padding">
+                {{ newPoint.Date }}
+            </b>
+            <b layout="row" layout-align="center center" class="md-padding">
+                {{ newPoint.Humidity }}
+            </b>
+        </div>
     </md-content>
     <div ng-include="'/angular/templates/sidebar-dataset.html'"></div>
 </section>

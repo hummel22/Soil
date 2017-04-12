@@ -1,0 +1,35 @@
+<md-dialog aria-label="Mango (Fruit)">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Manually Add Point</h2>
+                <span flex></span>
+                <md-button class="md-raised" ng-click="cancel()">
+                    Close
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <h2>New Humid Point</h2>
+                <p>
+                </p>
+            </div>
+            <input type="text" ng-model="answer.Sensor">
+            <input type="text" ng-model="answer.Date">
+            <input type="number" ng-model="answer.Humidity">
+            <input type="text" ng-model="answer.Type">
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="cancel()">
+                Cancel
+            </md-button>
+            <span flex></span>
+            <md-button ng-click="add(answer)">
+                Add
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
