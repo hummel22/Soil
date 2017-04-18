@@ -9,44 +9,26 @@
 
 angular.module('humidityService', [])
 
-  .factory('Humidity', function() {
-    var data = [
-                         {
-                           "Date" : "01/02/2017 11:33",
-                           "UniqueID" : 0,
-                           "Sensor" : "Stone",
-                           "Humidity" : 84,
-                           "Type" : "Humidity"
-                         },
-                         {
-                           "Date" : "01/02/2017 12:33",
-                           "UniqueID" : 1,
-                           "Sensor" : "Stone",
-                           "Humidity" : 21,
-                           "Type" : "Humidity"
-                         },
-                         {
-                           "Date" : "01/02/2017 14:33",
-                           "UniqueID" : 2,
-                           "Sensor" : "Stone",
-                           "Humidity" : 56,
-                           "Type" : "Humidity"
-                         },
-                         {
-                           "Date" : "01/02/2017 18:33",
-                           "UniqueID" : 03,
-                           "Sensor" : "Stone",
-                           "Humidity" :36,
-                           "Type" : "Humidity"
-                         }
-                       ]
+.factory('Humidity', ['$http', function($http) {
+  var data = [];
 
-    return {
-      get : function () {
-        return data;
-      },
-      put : function (newData) {
-        data.push(newData)
-      }
+  return {
+    get : function () {
+      console.log("Attempting Get");
+      $http.get('/api/v0/data')
+      .then(function(response){
+        console.log(response.status);
+        console.log(response.data);
+        angular.forEach(response.data.data, function(item){
+          data.push(item);
+        });
+      }, function(response){
+        console.log("No answer from the Mr Server");
+      });
+      return data;
+    },
+    put : function (newData) {
+      data.push(newData)
     }
-  });
+  }
+}]);
