@@ -33,10 +33,10 @@ exports.index = function(req, res) {
     }
   ]};
   res.json(data);
-}
+};
 
 
-exports.page = function(req, res)  {
-  console.log("Recevived Page Request");
-  res.send("Page API");
-}
+exports.add = function(req, res) {
+  console.log("Putting Data");
+  res.json({ message : "Success", UniqueID : Math.floor(Math.random() * 6) + 1 });
+};

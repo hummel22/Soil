@@ -2,7 +2,7 @@ var router = require('express').Router();
 controller = require("./controller.data")
 
 router.get('/', controller.index);
-router.get('/:page', controller.page);
+router.post('/', controller.add);
 
 
 module.exports = router
