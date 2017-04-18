@@ -28,7 +28,15 @@ angular.module('humidityService', [])
       return data;
     },
     put : function (newData) {
-      data.push(newData)
+      console.log("Posting Data");
+      $http.post('/api/v0/data')
+      .then(function(response){
+        console.log("Unique ID: " + response.data.UniqueID);
+        newData.UniqueID = response.data.UniqueID;
+        data.push(newData)
+      }, function (reponse){
+        console.log("Somethings gone terrible wrong");
+      })
     }
   }
 }]);
