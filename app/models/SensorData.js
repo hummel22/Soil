@@ -14,6 +14,11 @@ var sensorSchema = new Schema({
      type : {type : String, default: ''},
 });
 
+//TODO - Gerneate unique ID
+//var ObjectID = require('mongodb').ObjectID;
+//
+//var objectId = new ObjectID();
+
 var SensorData = mongoose.model('SensorData', sensorSchema);
 
 module.exports = SensorData;

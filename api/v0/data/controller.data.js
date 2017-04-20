@@ -1,4 +1,5 @@
 
+require.main.require('./app/models/SensorData.js');
 
 exports.index = function(req, res) {
   console.log("Access Data API");
@@ -38,5 +39,18 @@ exports.index = function(req, res) {
 
 exports.add = function(req, res) {
   console.log("Putting Data");
+  //TODO Validation
+  //TODO Generate Unique ID
+  var data = new SensorData({
+    sensor : req.data.sensor,
+    value : req.data.value,
+    data : req.data.date,
+    type : req.data.type,
+    uniqueID: 7  
+  });
+  data.save(function(err) {
+      if (err) throw err;
+        console.log('User saved successfully!');
+  });
   res.json({ message : "Success", UniqueID : Math.floor(Math.random() * 6) + 1 });
 };

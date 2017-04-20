@@ -12,9 +12,15 @@ require('./routes')(app)
 
 // Connect to the db
 var mongoose = require('mongoos');
-mongoose.connect("mongodb://localhost:27017/Soil", function (err, db) {
- if(err) throw err;
+mongoose.connect("mongodb://localhost:27017/Soil");
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    // we're connected!
+    console.log("DataBase Connected");
 });
+
+
 
 var server = app.listen(port, function () {
      var host = server.address().address;
