@@ -9,10 +9,10 @@ var port = process.env.PORT || 8081
 require('./routes')(app)
 
 
-var MongoClient = require('mongodb').MongoClient;
 
 // Connect to the db
-MongoClient.connect("mongodb://localhost:27017/Soil", function (err, db) {
+var mongoose = require('mongoos');
+mongoose.connect("mongodb://localhost:27017/Soil", function (err, db) {
  if(err) throw err;
 });
 

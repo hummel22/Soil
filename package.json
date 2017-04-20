@@ -22,6 +22,7 @@
     "apidoc": "^0.17.5",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
-    "mongodb": "^2.2.26"
+    "mongodb": "^2.2.26",
+    "mongoose": "^4.9.5"
   }
 }
