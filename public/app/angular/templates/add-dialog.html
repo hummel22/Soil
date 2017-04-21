@@ -16,10 +16,22 @@
                 <p>
                 </p>
             </div>
-            <input type="text" ng-model="answer.Sensor">
-            <input type="text" ng-model="answer.Date">
-            <input type="number" ng-model="answer.Humidity">
-            <input type="text" ng-model="answer.Type">
+            <md-input-container>
+              <label>Sensor</label>
+              <input ng-model="data.sensor" type="text">
+            </md-input-container>
+            <md-input-container>
+              <label>Date</label>
+              <input ng-model="data.date" type="text">
+            </md-input-container>
+            <md-input-container>
+              <label>Value</label>
+              <input ng-model="data.value" type="number">
+            </md-input-container>
+            <md-input-container>
+              <label>Type</label>
+              <input ng-model="data.type" type="text">
+            </md-input-container>
         </md-dialog-content>
 
         <md-dialog-actions layout="row">
@@ -27,7 +39,7 @@
                 Cancel
             </md-button>
             <span flex></span>
-            <md-button ng-click="add(answer)">
+            <md-button ng-click="add(data)">
                 Add
             </md-button>
         </md-dialog-actions>

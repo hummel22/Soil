@@ -11,7 +11,7 @@ require('./routes')(app)
 
 
 // Connect to the db
-var mongoose = require('mongoos');
+var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/Soil");
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

@@ -4,19 +4,20 @@ var myapp = angular.module('dialogModule', []);
 myapp.factory("HumidPoint", function() {
 
   var data = {
-    "Sensor" : "-",
-    "Date" : "N/A",
-    "Humidity" : "0%"
+    "sensor" : "BlueSensor",
+    "date" : "N/A",
+    "value" : "12",
+    "type" : "Humidity"
   }
 
   return {
       getPoint: function() {
         return data;
       },
-      setPoint: function(name, date, humidity)  {
-        data.Sensor = name;
-        data.Date = date;
-        data.Humidity = humidity;
+      setPoint: function(name, date, humidity, type)  {
+        data.sensor = name;
+        data.date = date;
+        data.value = humidity;
       }
     };
 });
@@ -32,8 +33,8 @@ myapp.controller('showDialogController', function ($scope,  $mdDialog, HumidPoin
         fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
       })
       .then(function(answer) {
-        console.log("Adding" + answer.Humidity);
-        HumidPoint.setPoint(answer.Sensor, answer.Date, answer.Humidity)
+        console.log("Adding" + answer.value);
+        HumidPoint.setPoint(answer.sensor, answer.date, answer.value, answer.type)
         Humidity.put(answer);
       }, function() {
         console.log("Cancelled");
@@ -47,7 +48,7 @@ myapp.controller('showDialogController', function ($scope,  $mdDialog, HumidPoin
       };
 
       $scope.add = function(answer) {
-        console.log("Add " + answer.Sensor);
+        console.log("Add " + answer.sensor);
         $mdDialog.hide(answer);
       };
     }
@@ -60,6 +61,3 @@ myapp.controller('showDialogController', function ($scope,  $mdDialog, HumidPoin
 myapp.controller("newPointMonitor", function($scope, HumidPoint)  {
   $scope.newPoint = HumidPoint.getPoint();
 });
-
-
-

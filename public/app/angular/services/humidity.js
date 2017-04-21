@@ -29,10 +29,11 @@ angular.module('humidityService', [])
     },
     put : function (newData) {
       console.log("Posting Data");
-      $http.post('/api/v0/data')
+      $http.post('/api/v0/data', newData)
       .then(function(response){
-        console.log("Unique ID: " + response.data.UniqueID);
-        newData.UniqueID = response.data.UniqueID;
+        console.log(response.data);
+        console.log("Unique ID: " + response.data.uniqueID);
+        newData.uniqueID = response.data.uniqueID;
         data.push(newData)
       }, function (reponse){
         console.log("Somethings gone terrible wrong");

@@ -8,16 +8,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var sensorSchema = new Schema({
      sensor : {type : String, default: ''},
-     date : Date,
+     date : {type : String, default: ''},
      value : Number,
-     uniqueID : {type : String, default: '', required: true, unique: true},
      type : {type : String, default: ''},
 });
-
-//TODO - Gerneate unique ID
-//var ObjectID = require('mongodb').ObjectID;
-//
-//var objectId = new ObjectID();
 
 var SensorData = mongoose.model('SensorData', sensorSchema);
 
