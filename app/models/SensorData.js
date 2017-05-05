@@ -7,12 +7,16 @@ var mongoose = require('mongoose');
 //
 var Schema = mongoose.Schema;
 var sensorSchema = new Schema({
-     sensor : {type : String, default: ''},
-     date : {type : String, default: ''},
+     sensor : {type : String, default: 'None'},
+     date : Date,
      value : Number,
      type : {type : String, default: ''},
 });
 
 var SensorData = mongoose.model('SensorData', sensorSchema);
+
+SensorData.validateData = function (data) {
+
+}
 
 module.exports = SensorData;
