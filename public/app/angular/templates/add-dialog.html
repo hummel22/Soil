@@ -22,7 +22,9 @@
             </md-input-container>
             <md-input-container>
               <label>Date</label>
-              <input ng-model="data.date" type="text">
+              <input mdc-datetime-picker date="true" time="true" type="text" id="datetime"
+placeholder="Date" show-todays-date="" min-date="date" ng-model="data.date" class=" md-input"
+readonly="readonly" short-time="true">
             </md-input-container>
             <md-input-container>
               <label>Value</label>

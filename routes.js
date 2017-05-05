@@ -29,19 +29,12 @@ module.exports = function(app) {
    */
   app.use('/apidocs', express.static('public/apidocs'));
   app.use('/', express.static('public/app'));
+  app.use('/node_modules', express.static('node_modules'));
   //app.get('/apidocs', function (req, res) {
   //      console.log("Got a GET request for /apidocs");
   //      res.sendFile(__dirname + '/public/apidocs/index.html');
   //})    
 
-
-  /**
-   * HOME Page
-   */
-  app.get('/', function (req, res) {
-       console.log("Homepage");
-       res.send("HOme");
-  })
 
 
   /**

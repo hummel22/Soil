@@ -1,5 +1,5 @@
 
-var myapp = angular.module('dialogModule', []);
+var myapp = angular.module('dialogModule', ['ngMaterialDatePicker']);
 
 myapp.factory("HumidPoint", function() {
 
