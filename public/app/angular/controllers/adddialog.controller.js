@@ -1,5 +1,5 @@
 
-var myapp = angular.module('soil.controllers.add-dialog', ['ngMaterialDatePicker']);
+var myapp = angular.module('soil.controllers.adddialog', ['ngMaterialDatePicker']);
 
 myapp.factory("DataFactory", function() {
 
@@ -26,7 +26,7 @@ myapp.controller('AddDialogController', function ($scope,  $mdDialog, DataFactor
   $scope.showAddDialog = function(ev)  {
       $mdDialog.show({
         controller: DialogController,
-        templateUrl: '/angular/templates/add-dialog.template.html',
+        templateUrl: '/angular/templates/adddialog.template.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:true,

@@ -1,0 +1,30 @@
+<md-dialog aria-label="Delete data point">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Delete Data</h2>
+                <span flex></span>
+                <md-button class="md-raised">
+                    Close
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+          <md-content>
+            <p>Delete {{id}}</p>
+          </md-content>
+
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button >
+                Cancel
+            </md-button>
+            <span flex></span>
+            <md-button>
+                Delete
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

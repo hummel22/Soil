@@ -1,7 +1,7 @@
 //TODO
 
 
-angular.module('soil.controllers.data-list', [])
+angular.module('soil.controllers.datalist', [])
 
   .controller('DataListController', function($scope, DataService) {
     $scope.humidity = DataService.get();

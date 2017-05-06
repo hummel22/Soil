@@ -1,0 +1,47 @@
+<md-dialog aria-label="Mango (Fruit)">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Edit Point</h2>
+                <span flex></span>
+                <md-button class="md-raised" ng-click="dialogVm.close()">
+                    Close
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <h2>New Humid Point</h2>
+            </div>
+            <md-input-container>
+              <label>Sensor</label>
+              <input ng-model="data.sensor" type="text">
+            </md-input-container>
+            <md-input-container>
+              <label>Date</label>
+              <input mdc-datetime-picker date="true" time="true" type="text" id="datetime"
+placeholder="Date" show-todays-date="" min-date="date" ng-model="data.date" class=" md-input"
+readonly="readonly" short-time="true">
+            </md-input-container>
+            <md-input-container>
+              <label>Value</label>
+              <input ng-model="data.value" type="number">
+            </md-input-container>
+            <md-input-container>
+              <label>Type</label>
+              <input ng-model="data.type" type="text">
+            </md-input-container>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="dialogVm.close()">
+                Cancel
+            </md-button>
+            <span flex></span>
+            <md-button ng-click="dialogVm.update()">
+                Update
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

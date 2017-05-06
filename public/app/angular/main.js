@@ -1,7 +1,9 @@
 var app = angular.module('SoilApp', [
-'ngRoute', 'ngMaterial',
- 'soil.controllers.data-list',
- 'soil.services.data',
- 'soil.controllers.sidebar',
- 'soil.controllers.add-dialog'
+'ngRoute',
+'ngMaterial',
+'soil.controllers.datalist',
+'soil.services.data',
+'soil.controllers.sidebar',
+'soil.controllers.adddialog',
+'soil.directives.datalistitem'
 ]);

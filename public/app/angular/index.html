@@ -12,16 +12,18 @@
     <script src="/node_modules/moment/min/moment-with-locales.min.js"></script>
     <script src="/node_modules/ng-material-datetimepicker/js/angular-material-datetimepicker.js"></script>
     <link rel="stylesheet" href="/node_modules/ng-material-datetimepicker/css/material-datetimepicker.css"/>
-
-    <script src="/angular/main.js"></script>
-    <script src="/angular/controllers/data-list.controller.js"></script>
-    <script src="/angular/controllers/sidebar.controller.js"></script>
-    <script src="/angular/controllers/add-dialog.controller.js"></script>
-    <script src="/angular/services/data.service.js"></script>
     <link rel="stylesheet" href="/angular/angular.css"/>
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <script src="/angular/controllers/datalist.controller.js"></script>
+    <script src="/angular/controllers/sidebar.controller.js"></script>
+    <script src="/angular/controllers/adddialog.controller.js"></script>
+    <script src="/angular/services/data.service.js"></script>
+
+    <script src="/angular/factories/panel.factory.js"></script>
+    <script src="/angular/directives/datalistitem.directive.js"></script>
+
+    <script src="/angular/main.js"></script>
 
 </head>
 <body>
@@ -29,6 +31,9 @@
 <!--Main Webiste Content Here-->
 <div ng-include="'/angular/templates/navbar-material.template.html'"></div>
 <div class="highlight" ng-view></div>
+
+<sl-data-list-item sl-data-id="30"></sl-data-list-item>
+<p>test</p>
 
 
 <!--Test Content Here-->
