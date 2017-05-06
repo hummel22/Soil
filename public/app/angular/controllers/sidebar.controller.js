@@ -1,5 +1,5 @@
-angular.module('sideBarModule', [])
-  .controller('sideBarController', function ($scope, $timeout, $mdSidenav) {
+angular.module('soil.controllers.sidebar', [])
+  .controller('SideBarController', function ($scope, $timeout, $mdSidenav) {
     $scope.toggleSideBar = buildToggler('right');
 
     function buildToggler(componentId) {

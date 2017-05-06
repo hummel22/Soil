@@ -1,7 +1,7 @@
 
-var myapp = angular.module('dialogModule', ['ngMaterialDatePicker']);
+var myapp = angular.module('soil.controllers.add-dialog', ['ngMaterialDatePicker']);
 
-myapp.factory("HumidPoint", function() {
+myapp.factory("DataFactory", function() {
 
   var data = {
     "sensor" : "BlueSensor",
@@ -22,11 +22,11 @@ myapp.factory("HumidPoint", function() {
     };
 });
 
-myapp.controller('showDialogController', function ($scope,  $mdDialog, HumidPoint, Humidity) {
+myapp.controller('AddDialogController', function ($scope,  $mdDialog, DataFactory, DataService) {
   $scope.showAddDialog = function(ev)  {
       $mdDialog.show({
         controller: DialogController,
-        templateUrl: '/angular/templates/add-dialog.html',
+        templateUrl: '/angular/templates/add-dialog.template.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:true,
@@ -34,8 +34,8 @@ myapp.controller('showDialogController', function ($scope,  $mdDialog, HumidPoin
       })
       .then(function(answer) {
         console.log("Adding" + answer.value);
-        HumidPoint.setPoint(answer.sensor, answer.date, answer.value, answer.type)
-        Humidity.put(answer);
+        DataFactory.setPoint(answer.sensor, answer.date, answer.value, answer.type)
+        DataService.put(answer);
       }, function() {
         console.log("Cancelled");
       });
@@ -58,6 +58,6 @@ myapp.controller('showDialogController', function ($scope,  $mdDialog, HumidPoin
 
 
 
-myapp.controller("newPointMonitor", function($scope, HumidPoint)  {
-  $scope.newPoint = HumidPoint.getPoint();
+myapp.controller("newPointMonitor", function($scope, DataFactory)  {
+  $scope.newPoint = DataFactory.getPoint();
 });

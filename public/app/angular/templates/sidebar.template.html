@@ -2,13 +2,13 @@
     <md-sidenav class="md-sidenav-right" md-component-id="right" >
         <md-toolbar class="md-hue-2">
             <div class="md-toolbar-tools"  layout="row" layout-align="end center" >
-                <div ng-controller="showDialogController">
+                <div ng-controller="AddDialogController">
                     <md-button class="md-raised" aria-label="Add Point" ng-click="showAddDialog($event)">
                         Add Point
                     </md-button>
                 </div>
                 <span flex></span>
-                <div ng-controller="sideBarController">
+                <div ng-controller="SideBarController">
                     <md-button class="md-raised" aria-label="Learn More" ng-click="toggleSideBar()">
                         Close
                     </md-button>
@@ -17,7 +17,7 @@
 
         </md-toolbar>
         <md-content layout-padding>
-            <div layout="column" layout-align="center center" ng-controller="mainController">
+            <div layout="column" layout-align="center center" ng-controller="DataListController">
                 <div class="container">
                     <div class="jumbotron text-center">
                         <h1>Data Points: <span class="label label-info">{{ humidity.length }}</span></h1>

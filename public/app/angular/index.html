@@ -14,10 +14,10 @@
     <link rel="stylesheet" href="/node_modules/ng-material-datetimepicker/css/material-datetimepicker.css"/>
 
     <script src="/angular/main.js"></script>
-    <script src="/angular/controllers/humidityListController.js"></script>
-    <script src="/angular/controllers/sideBarController.js"></script>
-    <script src="/angular/controllers/addDialogController.js"></script>
-    <script src="/angular/services/humidity.js"></script>
+    <script src="/angular/controllers/data-list.controller.js"></script>
+    <script src="/angular/controllers/sidebar.controller.js"></script>
+    <script src="/angular/controllers/add-dialog.controller.js"></script>
+    <script src="/angular/services/data.service.js"></script>
     <link rel="stylesheet" href="/angular/angular.css"/>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -27,30 +27,13 @@
 <body>
 
 <!--Main Webiste Content Here-->
-<div ng-include="'/angular/templates/navbar-material.html'"></div>
+<div ng-include="'/angular/templates/navbar-material.template.html'"></div>
 <div class="highlight" ng-view></div>
 
 
 <!--Test Content Here-->
 <section layout="row" flex>
-    <md-content flex layout-padding>
-        <p> Enter Data Here: <input type="text" ng-model="data"></p>
-        <p> Text Entered: {{data}}</p>
-        <p>Nothing here {{'yet' + '!'}}</p>
-
-        <div  ng-controller="newPointMonitor">
-            <b layout="row" layout-align="center center" class="md-padding">
-                {{ newPoint.sensor }}
-            </b>
-            <b layout="row" layout-align="center center" class="md-padding">
-                {{ newPoint.date }}
-            </b>
-            <b layout="row" layout-align="center center" class="md-padding">
-                {{ newPoint.value }}
-            </b>
-        </div>
-    </md-content>
-    <div ng-include="'/angular/templates/sidebar-dataset.html'"></div>
+    <div ng-include="'/angular/templates/sidebar.template.html'"></div>
 </section>
 
 

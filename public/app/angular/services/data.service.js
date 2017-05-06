@@ -7,9 +7,9 @@
 // V3 - Handling Paging of data
 //
 
-angular.module('humidityService', [])
+angular.module('soil.services.data', [])
 
-.factory('Humidity', ['$http', function($http) {
+.factory('DataService', ['$http', function($http) {
   var data = [];
 
   return {
