@@ -1,5 +1,5 @@
-angular.module('soil.factories.panel',[])
-  .controller('PanelDataEditController',function($mdDialog){
+angular.module('soil.factories.panel',['soil.factory.data'])
+  .controller('PanelDataEditController',function($scope, $mdDialog, PanelFactory){
     var dialogVm = this;
 
     dialogVm.close = function ()  {
@@ -7,8 +7,16 @@ angular.module('soil.factories.panel',[])
     }
 
     dialogVm.update = function () {
-      $mdDialog.hide();
+      //Validate data here
+      dialogVm.data.date = dialogVm.data.date._i;
+      dialogVm.data.group= "WhitePot",
+      $mdDialog.hide(dialogVm.data);
     }
+
+    dialogVm.delete = function () {
+      PanelFactory.openDeletePanel(dialogVm.data.id);
+    }
+
   })
 
   .controller('PanelGroupEditController',function($mdDialog){
@@ -17,7 +25,7 @@ angular.module('soil.factories.panel',[])
   .controller('PanelTypeEditController',function($mdDialog){
 
   })
-  .factory('PanelFactory', function($mdDialog){
+  .factory('PanelFactory', function($mdDialog, DataFactory){
     var deletePanel = $mdDialog.confirm()
           .title('Delete Data Point')
           .ariaLabel('Deletethe data')
@@ -26,16 +34,26 @@ angular.module('soil.factories.panel',[])
           .clickOutsideToClose(true);
 
 
-    var editPanelConfig = {
-            templateUrl: '/angular/templates/datapanel.template.html',
-            parent: angular.element(document.body),
-            controller: "PanelDataEditController",
-            controllerAs: 'dialogVm',
-            bindToController: true,
-            clickOutsideToClose: true,
-            escapeToClose: true
-          };
+    function loadPanel(data, info, callback) {
+      $mdDialog.show({
+              templateUrl: '/angular/templates/datapanel.template.html',
+              parent: angular.element(document.body),
+              controller: "PanelDataEditController",
+              controllerAs: 'dialogVm',
+              bindToController: true,
+              clickOutsideToClose: true,
+              escapeToClose: true,
+              locals : {
+                data : data,
+                info : info
+              }
+            })
+        .then(callback, function() {
+          console.log("Cancelled");
+        });
+    }
 
+    //Factory Interface
     return {
       openDeletePanel : function(id)  {
         deletePanel._options.textContent = "Are you sure you want to delete data object " + id + "?";
@@ -48,12 +66,19 @@ angular.module('soil.factories.panel',[])
       },
       openDataEditPanel : function(data) {
         //Update edit panel
-        $mdDialog.show(editPanelConfig)
-          .then(function(answer) {
-            console.log("Updating")
-          }, function() {
-            console.log("Cancelled");
-          });
+        info = {
+          title : "Point Editor",
+          accept : " Update",
+          content : "Edit Data Point",
+          disableName : true,
+          disableGroup : true,
+          disableType : true,
+          disableID : true,
+          disableDelete : false};
+        loadPanel(data, info, function(dataReturn) {
+          DataFactory.addPoint(dataReturn);
+          DataFactory.printData();
+        });
       },
       opendGroupEditPanel : function()  {
 
@@ -63,12 +88,6 @@ angular.module('soil.factories.panel',[])
       },
       openDataNewPanel : function(data) {
         //Update For adding panel
-        $mdDialog.show(editPanelConfig)
-          .then(function(answer) {
-            console.log("Updating")
-          }, function() {
-            console.log("Cancelled");
-          });
       }
     }
   })

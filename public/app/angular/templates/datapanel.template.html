@@ -2,7 +2,7 @@
     <form ng-cloak>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>Edit Point</h2>
+                <h2>{{dialogVm.info.title}}</h2>
                 <span flex></span>
                 <md-button class="md-raised" ng-click="dialogVm.close()">
                     Close
@@ -10,37 +10,50 @@
             </div>
         </md-toolbar>
 
-        <md-dialog-content>
-            <div class="md-dialog-content">
-                <h2>New Humid Point</h2>
+        <md-dialog-content style="max-width : 700px" >
+          <div class="md-dialog-content">
+            <h2>{{dialogVm.info.content}}</h2>
+            <div layout="row" layout-wrap>
+              <md-input-container flex="33" layout-wrap>
+                <label>Sensor</label>
+                <input ng-model="dialogVm.data.name" type="text" ng-disabled="dialogVm.info.disableName">
+              </md-input-container>
+              <md-input-container flex="33" layout-wrap>
+                <label>Date</label>
+                <input mdc-datetime-picker date="true" time="true" type="text" id="datetime"
+  placeholder="Date" show-todays-date="" min-date="date" ng-model="dialogVm.data.date" class=" md-input"
+  readonly="readonly" short-time="true" ng-disabled="dialogVm.info.disableDate">
+              </md-input-container>
+              <md-input-container flex="33" layout-wrap>
+                <label>Value</label>
+                <input ng-model="dialogVm.data.value" type="number" ng-disabled="dialogVm.info.disableValue">
+              </md-input-container>
+              <md-input-container flex="33" layout-wrap>
+                <label>Type</label>
+                <input ng-model="dialogVm.data.type" type="text" ng-disabled="dialogVm.info.disableType">
+              </md-input-container>
+              <md-input-container flex="33" layout-wrap>
+                <label>Group</label>
+                <input ng-model="dialogVm.data.group" type="text" ng-disabled="dialogVm.info.disableGroup">
+              </md-input-container>
+              <md-input-container flex="33" layout-wrap>
+                <label>Group</label>
+                <input ng-model="dialogVm.data.id" type="text" ng-disabled="dialogVm.info.disableID">
+              </md-input-container>
             </div>
-            <md-input-container>
-              <label>Sensor</label>
-              <input ng-model="data.sensor" type="text">
-            </md-input-container>
-            <md-input-container>
-              <label>Date</label>
-              <input mdc-datetime-picker date="true" time="true" type="text" id="datetime"
-placeholder="Date" show-todays-date="" min-date="date" ng-model="data.date" class=" md-input"
-readonly="readonly" short-time="true">
-            </md-input-container>
-            <md-input-container>
-              <label>Value</label>
-              <input ng-model="data.value" type="number">
-            </md-input-container>
-            <md-input-container>
-              <label>Type</label>
-              <input ng-model="data.type" type="text">
-            </md-input-container>
+          </div>
         </md-dialog-content>
 
         <md-dialog-actions layout="row">
             <md-button ng-click="dialogVm.close()">
                 Cancel
             </md-button>
+            <md-button ng-click="dialogVm.delete()" ng-show="!disableDelete" class="md-warn">
+                Delete
+            </md-button>
             <span flex></span>
             <md-button ng-click="dialogVm.update()">
-                Update
+                {{dialogVm.info.accept}}
             </md-button>
         </md-dialog-actions>
     </form>

@@ -3,13 +3,16 @@ angular.module('soil.directives.datalistitem',['soil.factories.panel'])
 
     var listitemVm  = this;
 
+    //Generate and open display here
     listitemVm.openEdit = function()  {
-      //Generate and open display here
-      console.log("EDIT");
+      //TODO replace with local scope variables
       var tmpData = {
-        sensor : "Wall Red Rock Humidity",
+        name : "Wall Red Rock Humidity",
         type : "Humidity",
         value : 100,
+        date : "2017-05-16T10:55:00.000Z",
+        id : 12934,
+        group : "WhitePot"
       };
       PanelFactory.openDataEditPanel(tmpData);
     }
