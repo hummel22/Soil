@@ -1,5 +1,5 @@
 angular.module('soil.directives.datalistitem',['soil.factories.panel'])
-  .controller('DataListItemController', function (PanelFactory){
+  .controller('DataListItemController', function ($scope, PanelFactory){
 
     var listitemVm  = this;
 
@@ -7,20 +7,19 @@ angular.module('soil.directives.datalistitem',['soil.factories.panel'])
     listitemVm.openEdit = function()  {
       //TODO replace with local scope variables
       var tmpData = {
-        name : "Wall Red Rock Humidity",
-        type : "Humidity",
-        value : 100,
-        date : "2017-05-16T10:55:00.000Z",
-        id : 12934,
-        group : "WhitePot"
+        name : listitemVm.name,
+        type : listitemVm.type,
+        value : listitemVm.value,
+        date : listitemVm.date,
+        id : listitemVm.id,
+        group : listitemVm.group
       };
       PanelFactory.openDataEditPanel(tmpData);
     }
 
     listitemVm.delete = function () {
       //open are you sure you want to delete that panel
-      console.log("Delete");
-      PanelFactory.openDeletePanel(listitemVm.id);
+      PanelFactory.openDeletePanel(listitemVm.name, listitemVm.id);
     }
 
   })
@@ -34,12 +33,12 @@ angular.module('soil.directives.datalistitem',['soil.factories.panel'])
       controllerAs: 'listitemVm',
       bindToController: true,
       scope: {
-        name : '=slSDataName',
-        type : '=slDataType',
+        name : '@slDataName',
+        type : '@slDataType',
         value : '=slDataValue',
         date : '=slDataDate',
         id : '=slDataId',
-        group : '=slDataGroup'
+        group : '@slDataGroup'
       }
     }
   })

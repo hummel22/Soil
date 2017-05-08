@@ -1,0 +1,17 @@
+<md-content layout="column" layout-align="center center" layout-gt-md="row" layout-align-gt-md="center start">
+
+  <md-content ng-repeat="sensor in datalistVm.data">
+    <h2>{{sensor.name}}</h2>
+      <div ng-repeat="point in sensor.data">
+        <sl-data-list-item
+          sl-data-id="point.id"
+          sl-data-name='{{sensor.name}}'
+          sl-data-type="{{sensor.type}}"
+          sl-data-group="{{sensor.group}}"
+          sl-data-value="point.value"
+          sl-data-date="point.date">
+        </sl-data-list-item>
+      </div>
+
+  </md-content>
+</md-content>

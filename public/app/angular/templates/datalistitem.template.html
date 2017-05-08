@@ -1,13 +1,8 @@
 <md-card md-theme="default" md-theme-watch>
-    <md-card-title>
-        <md-card-title-text>
-            <span class="md-subhead">Test Panel</span>
-        </md-card-title-text>
-    </md-card-title>
-    <md-card-content class="md-content-adjust" layout-align="end end">
-        <span>Content</span>
-        <span>{{listitemVm.id}}</span>
+    <md-card-content layout-align="center end" layout="row">
+        <div style="margin-right:25px">{{listitemVm.date}}</div>
 
+        <div>{{listitemVm.value}}%</div>
     </md-card-content>
     <md-card-actions layout="row" layout-align="end center">
         <md-button ng-click="listitemVm.delete()" class="md-warn">Delete</md-button>

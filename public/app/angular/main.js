@@ -5,5 +5,6 @@ var app = angular.module('SoilApp', [
 'soil.services.data',
 'soil.controllers.sidebar',
 'soil.controllers.adddialog',
-'soil.directives.datalistitem'
+'soil.directives.datalistitem',
+'soil.directives.datalist'
 ]);
