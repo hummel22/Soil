@@ -1,7 +1,10 @@
-<md-content layout="column" layout-align="center center" layout-gt-md="row" layout-align-gt-md="center start">
 
+<md-content layout="column" layout-align="center center" layout-gt-md="row" layout-align-gt-md="center start">
   <md-content ng-repeat="sensor in datalistVm.data">
     <h2>{{sensor.name}}</h2>
+    <md-button ng-click="datalistVm.add()" flex class="md-raised">
+        Add Point
+    </md-button>
       <div ng-repeat="point in sensor.data">
         <sl-data-list-item
           sl-data-id="point.id"

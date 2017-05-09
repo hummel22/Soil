@@ -1,8 +1,12 @@
-angular.module("soil.directives.datalist",['soil.directives.datalistitem', 'soil.factory.data'])
-  .controller('DataListController', function(DataFactory){
+angular.module("soil.directives.datalist",['soil.directives.datalistitem', 'soil.factory.data', 'soil.factories.panel'])
+  .controller('DataListController', function(DataFactory, PanelFactory){
     var datalistVm = this;
 
     datalistVm.data = DataFactory.getData();
+
+    datalistVm.add = function() {
+      PanelFactory.openDataNewPanel();
+    };
   })
   .directive("slDataList", function() {
     return {
