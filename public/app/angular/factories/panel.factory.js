@@ -1,6 +1,27 @@
-angular.module('soil.factories.panel',['soil.factory.data'])
-  .controller('PanelDataEditController',function($scope, $mdDialog, PanelFactory){
+angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.groups'])
+  .controller('PanelDataEditController',function($scope, $mdDialog, PanelFactory, GroupFactory, DataFactory){
     var dialogVm = this;
+
+    dialogVm.groups = GroupFactory.getGroups();
+
+    //List of sensor names and there correspondng groups and type
+    dialogVm.sensorData = {};
+    dialogVm.sensors = DataFactory.getMetaData();
+    // [
+    //   {
+    //     name : "WhitePotLeft",
+    //     type : "Humidity",
+    //     group : "WhitePotSensors"
+    //   }, {
+    //     name : "WhitePotRight",
+    //     type : "Tempature",
+    //     group : "WhitePotSensors"
+    //   }, {
+    //     name : "ApartmentTemp",
+    //     type : "Tempature",
+    //     group : "HouseSensors"
+    //   }
+    // ]
 
     dialogVm.close = function ()  {
       $mdDialog.cancel();
@@ -14,6 +35,14 @@ angular.module('soil.factories.panel',['soil.factory.data'])
 
     dialogVm.delete = function () {
       PanelFactory.openDeletePanel(dialogVm.data.name, dialogVm.data.id);
+    }
+
+    //Set Other fields(type and group) based on sensor chosen.
+    dialogVm.setData = function() {
+      var sensor = dialogVm.sensorData;
+      dialogVm.data.name = sensor.name;
+      dialogVm.data.type = sensor.type;
+      dialogVm.data.group = sensor.group;
     }
 
   })
@@ -73,9 +102,7 @@ angular.module('soil.factories.panel',['soil.factory.data'])
           disableType : true,
           disableID : true,
           disableDelete : false};
-        loadPanel(data, info, function(dataReturn) {
-          DataFactory.updatePoint(dataReturn);
-        });
+        loadPanel(data, info, DataFactory.updatePoint);
       },
       opendGroupEditPanel : function()  {
 
@@ -90,8 +117,18 @@ angular.module('soil.factories.panel',['soil.factory.data'])
           accept : "Create",
           content : "Create Data Point",
           disableID : true,
-          disableDelete : true};
-        loadPanel(null, info, DataFactory.addPoint);
+          disableGroup : true,
+          disableType : true,
+          disableDelete : true
+        };
+        var data = {
+          name : undefined,
+          type : undefined,
+          group : undefined,
+          value : undefined,
+          date : undefined
+        };
+        loadPanel(data, info, DataFactory.addPoint);
       }
     }
   })

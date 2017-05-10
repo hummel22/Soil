@@ -110,6 +110,26 @@ angular.module('soil.factory.data',[])
         },
         printData : function () {
           console.log(dataset);
+        },
+        getMetaData : function()  {
+          console.log("HELLO");
+          var metaData = [];
+          for(var key in dataset) {
+            metaData.push({
+              name : dataset[key].name,
+              type : dataset[key].type,
+              group : dataset[key].group
+            });
+          }
+          console.log(metaData);
+          return metaData;
+        },
+        getMetaDataByName :function(name) {
+          return {
+            name : name,
+            type : dataset[name].type,
+            group : dataset[name].group
+          }
         }
       }
   });
