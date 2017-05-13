@@ -129,6 +129,28 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
           date : undefined
         };
         loadPanel(data, info, DataFactory.addPoint);
+      },
+      openNewSensorPanel : function() {
+        console.log("Loading Panel");
+        info = {
+          title : "Point Editor",
+          accept : "Create",
+          content : "Create Data Point",
+          disableDelete : true,
+          hideID : true,
+          hideDate : true,
+          hideValue : true,
+          editName : true,
+          disableDelete : true
+        };
+        var data = {
+          name : undefined,
+          type : undefined,
+          group : undefined,
+          value : undefined,
+          date : "2017-05-16T10:55:00.000Z"
+        };
+        loadPanel(data, info, DataFactory.addMetaData);
       }
     }
   })

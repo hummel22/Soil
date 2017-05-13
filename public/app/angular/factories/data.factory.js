@@ -130,6 +130,19 @@ angular.module('soil.factory.data',[])
             type : dataset[name].type,
             group : dataset[name].group
           }
+        },
+        addMetaData : function(metaData)  {
+          if(metaData.name in dataset) {
+            console.log("Sensor already Exists");
+          } else {
+            {
+              dataset[metaData.name] = {
+                name : metaData.name,
+                type : metaData.type,
+                group : metaData.group
+              }
+            }
+          }
         }
       }
   });
