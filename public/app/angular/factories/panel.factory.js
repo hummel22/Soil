@@ -23,6 +23,117 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
     //   }
     // ]
 
+    //dialog.listItems - in view
+    dialogVm.newItemOrig = [];  //Map used  to overcome updates to new items;
+    //inf future use ids to replace all of this
+    dialogVm.list = {
+      newItems : [],
+      deleteItems : [],
+      updatedItems : {
+        origVals : [],
+        newVals : []
+      }
+    };
+
+     dialogVm.saveList = function() {
+        $mdDialog.hide(dialogVm.list);
+     };
+
+     function updateArray(array, oldVal, newVal)  {
+       var index = array.findIndex(function(element) {
+         return element === oldVal;
+       })
+       if(index !== undefined)  {
+         array[index] = newVal;
+         return true;
+       }
+       return false;
+     }
+
+     function getValue(array, oldVal) {
+       var index = array.findIndex(function(element) {
+         return element === oldVal;
+       })
+       return {
+         exists : function()  {
+           return index !== -1;
+         },
+         index : function() {
+           return index;
+         },
+         replace : function(newVal) {
+           if(index !== -1)  {
+             array[index] = newVal;
+             return true;
+           }
+           return false;
+         },
+         delete : function()  {
+           if(index !== -1)  {
+             array = array.splice(index, 1);
+           }
+         },
+         value : function() {
+           if(index !== -1)  {
+             return array[index];
+           }
+           return undefined;
+         }
+
+       }
+     }
+
+
+     dialogVm.updateItem = function(oldVal, newVal) {
+       //TODO no duplicates!!
+       //
+       //check to see if an original value has been updated
+       console.log("Old: " + oldVal + " NewVal: " + newVal);
+       var alreadyChagned = getValue(dialogVm.list.updatedItems.origVals, oldVal);
+       if(alreadyChagned.exists()) {
+         //It has been changedIndex
+         dialogVm.list.updatedItems.newVals[alreadyChagned.index()] = newVal;
+       } else {
+         //Did a new itme get upadated
+         var isNew = getValue(dialogVm.newItemOrig, oldVal);
+         if(isNew.exists()) {
+           dialogVm.list.newItems[isNew.index()] = newVal;
+           //getValue(dialogVm.listItems, oldVal).replace(newVal);
+         } else {
+           var isOriginal = getValue(dialogVm.listItems, oldVal);
+           if(isOriginal.exists())  {
+             //It is and is had changed so lets add it to updatedItems
+             dialogVm.list.updatedItems.newVals.push(newVal);
+             dialogVm.list.updatedItems.origVals.push(oldVal);
+           }
+         }
+       }
+     };
+
+     dialogVm.addItem = function(val)  {
+       //TODO check duplicates
+       var isDup = getValue(dialogVm.listItems, val).exists();
+       if(!isDup)  {
+         dialogVm.list.newItems.push(val);
+         dialogVm.listItems.push(val);
+         dialogVm.newItemOrig.push(val);
+       }
+     }
+
+     dialogVm.deleteItem = function (val) {
+       getValue(dialogVm.listItems, val).delete();
+       var isNew = getValue(dialogVm.list.newItems, val);
+       if(isNew.exists()) {
+         dialogVm.newItemOrig = dialogVm.newItemOrig.splice(isNew.index(), 1);
+         isNew.delete();
+       } else {
+         dialogVm.list.deleteItems.push(val);
+       }
+       getValue(dialogVm.list.updatedItems.newVals, val).delete();
+       getValue(dialogVm.list.updatedItems.origVals, val).delete();
+
+   }
+
     dialogVm.close = function ()  {
       $mdDialog.cancel();
     }
@@ -53,7 +164,7 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
   .controller('PanelTypeEditController',function($mdDialog){
 
   })
-  .factory('PanelFactory', function($mdDialog, DataFactory){
+  .factory('PanelFactory', function($mdDialog, DataFactory, GroupFactory){
     var deletePanel = $mdDialog.confirm()
           .title('Delete Data Point')
           .ariaLabel('Delete the data')
@@ -62,7 +173,14 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
           .clickOutsideToClose(true);
 
 
+    //Data to fill
+    //Info to display in panel
+    //Callback function returned on Create
     function loadPanel(data, info, callback) {
+      console.log(data.group);
+      data.group = GroupFactory.getGroupByID(data.groupID);
+      console.log(data.group);
+
       $mdDialog.show({
               templateUrl: '/angular/templates/datapanel.template.html',
               parent: angular.element(document.body),
@@ -73,6 +191,25 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
               escapeToClose: true,
               locals : {
                 data : data,
+                info : info
+              }
+            })
+        .then(callback, function() {
+          console.log("Cancelled");
+        });
+    }
+
+    function loadListPanel(data, info, callback)  {
+      $mdDialog.show({
+              templateUrl: '/angular/templates/dialog-list.html',
+              parent: angular.element(document.body),
+              controller: "PanelDataEditController",
+              controllerAs: 'dialogVm',
+              bindToController: true,
+              clickOutsideToClose: true,
+              escapeToClose: true,
+              locals : {
+                listItems : data,
                 info : info
               }
             })
@@ -105,7 +242,24 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
         loadPanel(data, info, DataFactory.updatePoint);
       },
       opendGroupEditPanel : function()  {
-
+        groups = GroupFactory.getGroups();
+        info = {
+          title : "Group Editor"
+        };
+        loadListPanel(groups, info, function(data) {
+          console.log(data);
+          for(var index in data.deleteItems)  {
+            console.log("Delete: " + data.deleteItems[index]);
+            GroupFactory.deleteGroupByName(data.deleteItems[index]);
+          }
+          for(var index in data.newItems)  {
+            GroupFactory.addGroup(data.newItems[index]);
+          }
+          for(var index in data.updatedItems.origVals)  {
+            console.log("Old: " + data.updatedItems.origVals[index] + " Value: " + data.updatedItems.newVals[index]);
+            GroupFactory.updateGroup(data.updatedItems.origVals[index], data.updatedItems.newVals[index]);
+          }
+        });
       },
       openTypeEditPanel : function()  {
 

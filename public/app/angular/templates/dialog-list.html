@@ -1,0 +1,51 @@
+<md-dialog aria-label="Delete data point">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{dialogVm.info.title}}</h2>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+          <md-list flex>
+            <md-subheader class="md-no-sticky">Items</md-subheader>
+            <md-divider ></md-divider>
+            <md-list-item  ng-click="null" ng-repeat="item in dialogVm.listItems">
+              <div class="md-list-item-text" layout="row">
+                <md-input-container class="hide-validation-error list-panel-list-item">
+                  <input ng-value="item" ng-model="listItemUpdate" type="text" ng-change="dialogVm.updateItem(item, listItemUpdate)">
+                </md-input-container>
+                <span flex></span>
+                <md-button class="md-warn" ng-click="dialogVm.deleteItem(item)"> Delete </md-button>
+              </div>
+            </md-list-item>
+
+            <!-- Add List item -->
+            <md-divider ></md-divider>
+            <md-list-item  ng-click="null">
+              <div class="md-list-item-text" layout="row">
+                <md-input-container class="hide-validation-error add-list-item">
+                  <label>Group Name</label>
+                  <input  ng-model="dialogVm.newItem" type="text">
+                </md-input-container>
+                <span flex></span>
+                <md-button ng-click="dialogVm.addItem(dialogVm.newItem)"> Add </md-button>
+              </div>
+            </md-list-item>
+            <md-divider ></md-divider>
+          </md-list>
+
+
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="dialogVm.close()">
+                Cancel
+            </md-button>
+            <span flex></span>
+            <md-button class="md-raised md-primary" ng-click="dialogVm.saveList()">
+                Update
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

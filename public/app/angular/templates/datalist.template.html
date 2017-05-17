@@ -5,11 +5,8 @@
     <md-button ng-click="datalistVm.addPoint()" flex class="md-raised">
         Add Point
     </md-button>
-    <md-button flex class="md-raised">
+    <md-button flex class="md-raised" ng-click="datalistVm.editGroups()" >
         Edit Groups
-    </md-button>
-    <md-button flex class="md-raised">
-        Add Group
     </md-button>
     <md-button flex class="md-raised">
         Edit Sensors
@@ -30,7 +27,8 @@
           sl-data-type="{{sensor.type}}"
           sl-data-group="{{sensor.group}}"
           sl-data-value="point.value"
-          sl-data-date="point.date">
+          sl-data-date="point.date"
+          sl-data-group-id="{{sensor.groupID}}">
         </sl-data-list-item>
       </div>
 

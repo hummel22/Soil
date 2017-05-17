@@ -1,4 +1,16 @@
 
+.hide-validation-error .md-errors-spacer {
+  display: none;
+}
+
+.add-list-item  {
+  margin-top: 26px;
+}
+
+.list-panel-list-item {
+  margin-top: 7px;
+  margin-bottom: 7px
+}
 
 .humidity-data  {
   min-width : 270px

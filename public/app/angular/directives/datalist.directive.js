@@ -11,6 +11,10 @@ angular.module("soil.directives.datalist",['soil.directives.datalistitem', 'soil
     datalistVm.addSensor = function() {
       PanelFactory.openNewSensorPanel();
     }
+
+    datalistVm.editGroups = function()  {
+      PanelFactory.opendGroupEditPanel();
+    }
   })
   .directive("slDataList", function() {
     return {

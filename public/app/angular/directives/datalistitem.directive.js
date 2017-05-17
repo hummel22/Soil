@@ -6,15 +6,8 @@ angular.module('soil.directives.datalistitem',['soil.factories.panel'])
     //Generate and open display here
     listitemVm.openEdit = function()  {
       //TODO replace with local scope variables
-      var tmpData = {
-        name : listitemVm.name,
-        type : listitemVm.type,
-        value : listitemVm.value,
-        date : listitemVm.date,
-        id : listitemVm.id,
-        group : listitemVm.group
-      };
-      PanelFactory.openDataEditPanel(tmpData);
+
+      PanelFactory.openDataEditPanel(listitemVm);
     }
 
     listitemVm.delete = function () {
@@ -38,7 +31,8 @@ angular.module('soil.directives.datalistitem',['soil.factories.panel'])
         value : '=slDataValue',
         date : '=slDataDate',
         id : '=slDataId',
-        group : '@slDataGroup'
+        group : '@slDataGroup',
+        groupID : '@slDataGroupId'
       }
     }
   })

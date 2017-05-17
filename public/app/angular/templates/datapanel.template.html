@@ -31,7 +31,7 @@
                 <input ng-model="dialogVm.data.name" type="text" ng-disabled="dialogVm.info.disableName && !dialogVm.info.editName">
               </md-input-container>
               <!-- Non Menu Editable Sensor -->
-              <md-input-container flex="33" layout-wrap ng-show="dialogVm.info.disableName">
+              <md-input-container flex="33" layout-wrap ng-show="!dialogVm.info.disableName">
                 <label>Sensor Name</label>
                 <input ng-model="dialogVm.data.name" type="text">
               </md-input-container>
@@ -82,7 +82,7 @@
         </md-dialog-content>
 
         <md-dialog-actions layout="row">
-            <md-button ng-click="dialogVm.close()"> 
+            <md-button ng-click="dialogVm.close()">
                 Cancel
             </md-button>
             <md-button ng-click="dialogVm.delete()" ng-show="!dialogVm.info.disableDelete" class="md-warn">
