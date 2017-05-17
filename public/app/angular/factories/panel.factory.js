@@ -1,5 +1,5 @@
-angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.groups'])
-  .controller('PanelDataEditController',function($scope, $mdDialog, PanelFactory, GroupFactory, DataFactory){
+angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.groups','soil.factories.types'])
+  .controller('PanelDataEditController',function($scope, $mdDialog, PanelFactory, GroupFactory, TypeFactory, DataFactory){
     var dialogVm = this;
 
     dialogVm.groups = GroupFactory.getGroups();
@@ -88,7 +88,6 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
        //TODO no duplicates!!
        //
        //check to see if an original value has been updated
-       console.log("Old: " + oldVal + " NewVal: " + newVal);
        var alreadyChagned = getValue(dialogVm.list.updatedItems.origVals, oldVal);
        if(alreadyChagned.exists()) {
          //It has been changedIndex
@@ -164,7 +163,7 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
   .controller('PanelTypeEditController',function($mdDialog){
 
   })
-  .factory('PanelFactory', function($mdDialog, DataFactory, GroupFactory){
+  .factory('PanelFactory', function($mdDialog, DataFactory, GroupFactory, TypeFactory){
     var deletePanel = $mdDialog.confirm()
           .title('Delete Data Point')
           .ariaLabel('Delete the data')
@@ -177,10 +176,8 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
     //Info to display in panel
     //Callback function returned on Create
     function loadPanel(data, info, callback) {
-      console.log(data.group);
       data.group = GroupFactory.getGroupByID(data.groupID);
-      console.log(data.group);
-
+      data.type = TypeFactory.getTypeByID(data.typeID);
       $mdDialog.show({
               templateUrl: '/angular/templates/datapanel.template.html',
               parent: angular.element(document.body),
@@ -247,22 +244,33 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
           title : "Group Editor"
         };
         loadListPanel(groups, info, function(data) {
-          console.log(data);
           for(var index in data.deleteItems)  {
-            console.log("Delete: " + data.deleteItems[index]);
             GroupFactory.deleteGroupByName(data.deleteItems[index]);
           }
           for(var index in data.newItems)  {
             GroupFactory.addGroup(data.newItems[index]);
           }
           for(var index in data.updatedItems.origVals)  {
-            console.log("Old: " + data.updatedItems.origVals[index] + " Value: " + data.updatedItems.newVals[index]);
             GroupFactory.updateGroup(data.updatedItems.origVals[index], data.updatedItems.newVals[index]);
           }
         });
       },
       openTypeEditPanel : function()  {
-
+        types = TypeFactory.getTypes();
+        info = {
+          title : "Type Editor"
+        };
+        loadListPanel(types, info, function(data) {
+          for(var index in data.deleteItems)  {
+            TypeFactory.deleteTypeByName(data.deleteItems[index]);
+          }
+          for(var index in data.newItems)  {
+            TypeFactory.addType(data.newItems[index]);
+          }
+          for(var index in data.updatedItems.origVals)  {
+            TypeFactory.updateType(data.updatedItems.origVals[index], data.updatedItems.newVals[index]);
+          }
+        });
       },
       openDataNewPanel : function() {
         //Update For adding panel
@@ -285,7 +293,6 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
         loadPanel(data, info, DataFactory.addPoint);
       },
       openNewSensorPanel : function() {
-        console.log("Loading Panel");
         info = {
           title : "Point Editor",
           accept : "Create",

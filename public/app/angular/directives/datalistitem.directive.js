@@ -32,7 +32,8 @@ angular.module('soil.directives.datalistitem',['soil.factories.panel'])
         date : '=slDataDate',
         id : '=slDataId',
         group : '@slDataGroup',
-        groupID : '@slDataGroupId'
+        groupID : '@slDataGroupId',
+        typeID : '@slDataTypeId'
       }
     }
   })

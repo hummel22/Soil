@@ -13,7 +13,6 @@ angular.module('soil.factories.groups' ,[])
     //TODO init load groups
 
     function getID(value) {
-      console.log("Search for " + value);
       for(var[key, val] of groups)  {
         if(value === val) {
           return key;
@@ -24,7 +23,6 @@ angular.module('soil.factories.groups' ,[])
 
     return {
       getGroups : function () {
-        console.log(Array.from(groups.values()));
         return Array.from(groups.values());
       },
       addGroup : function (newGroup) {
@@ -37,7 +35,6 @@ angular.module('soil.factories.groups' ,[])
       },
       deleteGroupByName : function (name) {
         for(var [key, value] of groups)  {
-          console.log("Key: " + key + " Value: " + value + " Search: " + name);
           if(value === name)  {
             groups.delete(key);
             break;
@@ -54,11 +51,6 @@ angular.module('soil.factories.groups' ,[])
         }
       },
       getGroupByID : function (id)  {
-        if(!groups.has(Number(id))) {
-          console.log("OOHHHHH BOYYY");
-          console.log(id);
-          console.log(groups);
-        }
         return groups.get(Number(id));
       }
     }

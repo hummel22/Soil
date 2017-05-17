@@ -15,6 +15,10 @@ angular.module("soil.directives.datalist",['soil.directives.datalistitem', 'soil
     datalistVm.editGroups = function()  {
       PanelFactory.opendGroupEditPanel();
     }
+
+    datalistVm.editTypes = function()  {
+      PanelFactory.openTypeEditPanel();
+    }
   })
   .directive("slDataList", function() {
     return {

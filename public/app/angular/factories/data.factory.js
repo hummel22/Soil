@@ -1,13 +1,14 @@
-angular.module('soil.factory.data',['soil.factories.groups'])
-  .factory('DataFactory', function(GroupFactory)  {
+angular.module('soil.factory.data',['soil.factories.groups','soil.factories.types'])
+  .factory('DataFactory', function(GroupFactory, TypeFactory)  {
 
     //tmp bock of data
     var dataset = {
       "SpinySensor" : {
         name : "SpinySensor",
         type : "Humidity",
+        typeID : 75798,
         group : "WhitePot",
-        groupID : 142342,
+        groupID : 25232,
         dataID : 523233432,
         data : [
           {
@@ -89,7 +90,6 @@ angular.module('soil.factory.data',['soil.factories.groups'])
           } else {
             //TODO launch error dialog
             //alert.error
-            console.log("Magic");
           }
         },
 
@@ -110,17 +110,16 @@ angular.module('soil.factory.data',['soil.factories.groups'])
           console.log(dataset);
         },
         getMetaData : function()  {
-          console.log("HELLO");
           var metaData = [];
           for(var key in dataset) {
             metaData.push({
               name : dataset[key].name,
-              type : dataset[key].type,
+              type : TypeFactory.getTypeByID(dataset[key].typeID),
+              typeID : dataset[key].typeID,
               group : GroupFactory.getGroupByID(dataset[key].groupID),
               groupID : dataset[key].groupID
             });
           }
-          console.log(metaData);
           return metaData;
         },
         getMetaDataByName :function(name) {
