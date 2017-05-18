@@ -177,7 +177,11 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
                 info : info
               }
             })
-        .then(callback, function() {
+        .then(function(rData){
+          rData.groupID = GroupFactory.getIDByGroup(rData.group);
+          rData.typeID = TypeFactory.getIDByType(rData.type);
+          callback(rData);
+        }, function() {
           console.log("Cancelled");
         });
     }
@@ -292,8 +296,8 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
         };
         var data = {
           name : undefined,
-          type : undefined,
-          group : undefined,
+          type : TypeFactory.getTypes()[0],
+          group : GroupFactory.getGroups()[0],
           value : undefined,
           date : "2017-05-16T10:55:00.000Z"
         };

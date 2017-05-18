@@ -55,6 +55,9 @@ angular.module('soil.factories.types', [])
       },
       getTypeByID : function (id)  {
         return types.get(Number(id));
+      },
+      getIDByType : function(value) {
+        return getID(value);
       }
     }
   });

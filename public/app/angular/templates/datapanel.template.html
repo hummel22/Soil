@@ -20,7 +20,7 @@
               <md-input-container flex="33" layout-wrap ng-show="dialogVm.info.selectSensor">
                 <label>Sensor Name</label>
                 <md-select ng-model="dialogVm.sensorData" ng-change="dialogVm.setData()">
-                  <md-option ng-repeat="sensor in dialogVm.sensors" ng-value="{{sensor}}" >
+                  <md-option ng-repeat="sensor in dialogVm.sensors" ng-value="sensor" >
                     {{sensor.name}}
                   </md-option>
                 </md-select>
@@ -56,7 +56,7 @@
               <md-input-container flex="33" layout-wrap layout-wrap ng-show="!dialogVm.info.disableType">
                 <label>Type</label>
                 <md-select ng-model="dialogVm.data.type" >
-                  <md-option ng-repeat="type in dialogVm.types" ng-value="{{type}}">
+                  <md-option ng-repeat="type in dialogVm.types" ng-value="type">
                     {{type}}
                   </md-option>
                 </md-select>
@@ -67,12 +67,13 @@
                 <input ng-model="dialogVm.data.type" type="text" ng-disabled="true">
               </md-input-container>
 
+
               <!-- Groups -->
               <!-- Menu of groups -->
               <md-input-container flex="33" layout-wrap layout-wrap ng-show="!dialogVm.info.disableGroup">
                 <label>Groups</label>
                 <md-select ng-model="dialogVm.data.group">
-                  <md-option ng-repeat="group in dialogVm.groups" ng-value="{{group}}">
+                  <md-option ng-repeat="group in dialogVm.groups" ng-value="group">
                     {{group}}
                   </md-option>
                 </md-select>
