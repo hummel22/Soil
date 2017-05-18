@@ -3,25 +3,11 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
     var dialogVm = this;
 
     dialogVm.groups = GroupFactory.getGroups();
+    dialogVm.types = TypeFactory.getTypes();
 
     //List of sensor names and there correspondng groups and type
     dialogVm.sensorData = {};
     dialogVm.sensors = DataFactory.getMetaData();
-    // [
-    //   {
-    //     name : "WhitePotLeft",
-    //     type : "Humidity",
-    //     group : "WhitePotSensors"
-    //   }, {
-    //     name : "WhitePotRight",
-    //     type : "Tempature",
-    //     group : "WhitePotSensors"
-    //   }, {
-    //     name : "ApartmentTemp",
-    //     type : "Tempature",
-    //     group : "HouseSensors"
-    //   }
-    // ]
 
     //dialog.listItems - in view
     dialogVm.newItemOrig = [];  //Map used  to overcome updates to new items;
@@ -231,7 +217,6 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
           title : "Point Editor",
           accept : "Update",
           content : "Edit Data Point",
-          disableName : true,
           disableGroup : true,
           disableType : true,
           disableID : true,
@@ -278,6 +263,7 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
           title : "Point Editor",
           accept : "Create",
           content : "Create Data Point",
+          selectSensor : true,
           disableID : true,
           disableGroup : true,
           disableType : true,

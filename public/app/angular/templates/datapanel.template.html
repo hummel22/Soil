@@ -16,8 +16,8 @@
             <div layout="row" layout-wrap>
 
               <!-- Sensor Names -->
-              <!-- Menu - Selectable List-->
-              <md-input-container flex="33" layout-wrap ng-show="!(dialogVm.info.disableName || dialogVm.info.editName)">
+              <!-- Menu - Selectable List - Used to Change Sensor-->
+              <md-input-container flex="33" layout-wrap ng-show="dialogVm.info.selectSensor">
                 <label>Sensor Name</label>
                 <md-select ng-model="dialogVm.sensorData" ng-change="dialogVm.setData()">
                   <md-option ng-repeat="sensor in dialogVm.sensors" ng-value="{{sensor}}" >
@@ -25,15 +25,15 @@
                   </md-option>
                 </md-select>
               </md-input-container>
-              <!-- Non Menu Uneditable Sensor -->
-              <md-input-container flex="33" layout-wrap ng-show="dialogVm.info.disableName || dialogVm.info.editName">
+              <!-- Non Menu Uneditable Sensor - Used to Dispay sensor-->
+              <md-input-container flex="33" layout-wrap ng-show="dialogVm.info.editName">
                 <label>Sensor Name</label>
-                <input ng-model="dialogVm.data.name" type="text" ng-disabled="dialogVm.info.disableName && !dialogVm.info.editName">
+                <input ng-model="dialogVm.data.name" type="text" >
               </md-input-container>
-              <!-- Non Menu Editable Sensor -->
-              <md-input-container flex="33" layout-wrap ng-show="!dialogVm.info.disableName">
+              <!-- Non Menu Editable Sensor - Used to Create new Sensor Name-->
+              <md-input-container flex="33" layout-wrap ng-show="!dialogVm.info.selectSensor && !dialogVm.info.editName">
                 <label>Sensor Name</label>
-                <input ng-model="dialogVm.data.name" type="text">
+                <input ng-model="dialogVm.data.name" type="text" ng-disabled="true">
               </md-input-container>
 
               <!-- Date -->
@@ -50,17 +50,28 @@
                 <input ng-model="dialogVm.data.value" type="number" ng-disabled="dialogVm.info.disableValue">
               </md-input-container>
 
-              <!-- Type -->
-              <md-input-container flex="33" layout-wrap>
+
+              <!-- Types -->
+              <!-- Menu of Types -->
+              <md-input-container flex="33" layout-wrap layout-wrap ng-show="!dialogVm.info.disableType">
                 <label>Type</label>
-                <input ng-model="dialogVm.data.type" type="text" ng-disabled="dialogVm.info.disableType">
+                <md-select ng-model="dialogVm.data.type" >
+                  <md-option ng-repeat="type in dialogVm.types" ng-value="{{type}}">
+                    {{type}}
+                  </md-option>
+                </md-select>
+              </md-input-container>
+              <!-- Editable Groups -->
+              <md-input-container flex="33" layout-wrap ng-show="dialogVm.info.disableType">
+                <label>Type</label>
+                <input ng-model="dialogVm.data.type" type="text" ng-disabled="true">
               </md-input-container>
 
               <!-- Groups -->
               <!-- Menu of groups -->
               <md-input-container flex="33" layout-wrap layout-wrap ng-show="!dialogVm.info.disableGroup">
                 <label>Groups</label>
-                <md-select ng-model="dialogVm.data.group" ng-disabled="dialogVm.info.disableGroup">
+                <md-select ng-model="dialogVm.data.group">
                   <md-option ng-repeat="group in dialogVm.groups" ng-value="{{group}}">
                     {{group}}
                   </md-option>
