@@ -6,7 +6,6 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
     dialogVm.types = TypeFactory.getTypes();
 
     //List of sensor names and there correspondng groups and type
-    dialogVm.sensorData = {};
     dialogVm.sensors = DataFactory.getMetaData();
 
     //dialogVm.panelForm = $scope.submitForm;
@@ -140,9 +139,12 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
     //Set Other fields(type and group) based on sensor chosen.
     dialogVm.setData = function() {
       var sensor = dialogVm.sensorData;
-      dialogVm.data.name = sensor.name;
-      dialogVm.data.type = sensor.type;
-      dialogVm.data.group = sensor.group;
+      for(var index in dialogVm.sensors)  {
+        if(dialogVm.sensors[index].name === dialogVm.data.name) {
+          dialogVm.data.type = dialogVm.sensors[index].type;
+          dialogVm.data.group = dialogVm.sensors[index].group;
+        }
+      }
     }
 
   })
@@ -265,7 +267,7 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
           }
         });
       },
-      openDataNewPanel : function() {
+      openDataNewPanelGen : function() {
         //Update For adding panel
         info = {
           title : "Point Editor",
@@ -283,6 +285,20 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
           group : undefined,
           value : undefined,
           date : undefined
+        };
+        loadPanel(data, info, DataFactory.addPoint);
+      },
+      openDataNewPanel : function(data) {
+        //Update For adding panel
+        info = {
+          title : "Point Editor",
+          accept : "Create",
+          content : "Create Data Point",
+          selectSensor : true,
+          disableID : true,
+          disableGroup : true,
+          disableType : true,
+          disableDelete : true
         };
         loadPanel(data, info, DataFactory.addPoint);
       },

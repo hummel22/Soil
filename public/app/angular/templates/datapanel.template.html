@@ -19,8 +19,8 @@
               <!-- Menu - Selectable List - Used to Change Sensor-->
               <md-input-container flex="33" layout-wrap ng-show="dialogVm.info.selectSensor">
                 <label>Sensor Name</label>
-                <md-select ng-model="dialogVm.sensorData" ng-change="dialogVm.setData()" ng-required="dialogVm.info.selectSensor">
-                  <md-option ng-repeat="sensor in dialogVm.sensors" ng-value="sensor" >
+                <md-select ng-model="dialogVm.data.name" ng-change="dialogVm.setData()" ng-required="dialogVm.info.selectSensor">
+                  <md-option ng-repeat="sensor in dialogVm.sensors" ng-value="sensor.name" >
                     {{sensor.name}}
                   </md-option>
                 </md-select>
@@ -41,13 +41,13 @@
                 <label>Date</label>
                 <input mdc-datetime-picker date="true" time="true" type="text" id="datetime"
   placeholder="Date" show-todays-date="" min-date="date" ng-model="dialogVm.data.date" class="md-input"
-  readonly="readonly" short-time="true" ng-disabled="dialogVm.info.disableDate">
+  readonly="readonly" short-time="true" ng-disabled="dialogVm.info.disableDate" ng-required="!dialogVm.info.hideDate">
               </md-input-container>
 
               <!-- Date -->
               <md-input-container flex="33" layout-wrap ng-show="!dialogVm.info.hideValue">
                 <label>Value</label>
-                <input ng-model="dialogVm.data.value" type="number" ng-disabled="dialogVm.info.disableValue">
+                <input ng-model="dialogVm.data.value" type="number" ng-disabled="dialogVm.info.disableValue" ng-required="!dialogVm.info.hideValue">
               </md-input-container>
 
 

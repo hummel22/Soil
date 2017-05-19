@@ -4,8 +4,12 @@ angular.module("soil.directives.datalist",['soil.directives.datalistitem', 'soil
 
     datalistVm.data = DataFactory.getData();
 
-    datalistVm.addPoint = function() {
-      PanelFactory.openDataNewPanel();
+    datalistVm.addPointGen = function() {
+      PanelFactory.openDataNewPanelGen();
+    };
+
+    datalistVm.addPoint = function(sensor) {
+      PanelFactory.openDataNewPanel(sensor);
     };
 
     datalistVm.addSensor = function() {

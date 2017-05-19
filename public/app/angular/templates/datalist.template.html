@@ -3,11 +3,14 @@
   <md-button flex class="md-raised" ng-click="datalistVm.editGroups()" >
       Edit Groups
   </md-button>
+  <md-button ng-click="datalistVm.editTypes()" flex class="md-raised">
+      Edit Types
+  </md-button>
   <md-button ng-click="datalistVm.addSensor()" flex class="md-raised">
       New Sensor
   </md-button>
-  <md-button ng-click="datalistVm.editTypes()" flex class="md-raised">
-      Edit Types
+  <md-button ng-click="datalistVm.addPointGen()" flex class="md-raised">
+      Add Point
   </md-button>
 </md-content>
 
@@ -15,7 +18,7 @@
 <md-content layout="column" layout-align="center center" layout-gt-md="row" layout-align-gt-md="center start">
   <md-content ng-repeat="sensor in datalistVm.data">
     <h2>{{sensor.name}}</h2>
-    <md-button ng-click="datalistVm.addPoint()" flex class="md-raised">
+    <md-button ng-click="datalistVm.addPoint(sensor)" flex class="md-raised">
         Add Point
     </md-button>
 
