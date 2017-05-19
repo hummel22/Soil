@@ -1,5 +1,5 @@
 <md-dialog aria-label="Mango (Fruit)">
-    <form ng-cloak>
+    <form ng-cloak name="dialogVm.panelForm">
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>{{dialogVm.info.title}}</h2>
@@ -19,7 +19,7 @@
               <!-- Menu - Selectable List - Used to Change Sensor-->
               <md-input-container flex="33" layout-wrap ng-show="dialogVm.info.selectSensor">
                 <label>Sensor Name</label>
-                <md-select ng-model="dialogVm.sensorData" ng-change="dialogVm.setData()">
+                <md-select ng-model="dialogVm.sensorData" ng-change="dialogVm.setData()" ng-required="dialogVm.info.selectSensor">
                   <md-option ng-repeat="sensor in dialogVm.sensors" ng-value="sensor" >
                     {{sensor.name}}
                   </md-option>
@@ -28,7 +28,7 @@
               <!-- Non Menu Uneditable Sensor - Used to Dispay sensor-->
               <md-input-container flex="33" layout-wrap ng-show="dialogVm.info.editName">
                 <label>Sensor Name</label>
-                <input ng-model="dialogVm.data.name" type="text" >
+                <input ng-model="dialogVm.data.name" type="text" required>
               </md-input-container>
               <!-- Non Menu Editable Sensor - Used to Create new Sensor Name-->
               <md-input-container flex="33" layout-wrap ng-show="!dialogVm.info.selectSensor && !dialogVm.info.editName">
@@ -55,7 +55,7 @@
               <!-- Menu of Types -->
               <md-input-container flex="33" layout-wrap layout-wrap ng-show="!dialogVm.info.disableType">
                 <label>Type</label>
-                <md-select ng-model="dialogVm.data.type" >
+                <md-select ng-model="dialogVm.data.type" required>
                   <md-option ng-repeat="type in dialogVm.types" ng-value="type">
                     {{type}}
                   </md-option>
@@ -72,7 +72,7 @@
               <!-- Menu of groups -->
               <md-input-container flex="33" layout-wrap layout-wrap ng-show="!dialogVm.info.disableGroup">
                 <label>Groups</label>
-                <md-select ng-model="dialogVm.data.group">
+                <md-select ng-model="dialogVm.data.group" required>
                   <md-option ng-repeat="group in dialogVm.groups" ng-value="group">
                     {{group}}
                   </md-option>
@@ -101,7 +101,7 @@
                 Delete
             </md-button>
             <span flex></span>
-            <md-button ng-click="dialogVm.update()">
+            <md-button type="submit" ng-click="dialogVm.update()">
                 {{dialogVm.info.accept}}
             </md-button>
         </md-dialog-actions>

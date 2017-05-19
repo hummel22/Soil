@@ -9,6 +9,8 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
     dialogVm.sensorData = {};
     dialogVm.sensors = DataFactory.getMetaData();
 
+    //dialogVm.panelForm = $scope.submitForm;
+
     //dialog.listItems - in view
     dialogVm.newItemOrig = [];  //Map used  to overcome updates to new items;
     //inf future use ids to replace all of this
@@ -125,8 +127,10 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
 
     dialogVm.update = function () {
       //Validate data here
-      dialogVm.data.date = new Date(dialogVm.data.date).toISOString();
-      $mdDialog.hide(dialogVm.data);
+      if(dialogVm.panelForm.$valid) {
+        dialogVm.data.date = new Date(dialogVm.data.date).toISOString();
+        $mdDialog.hide(dialogVm.data);
+      }
     }
 
     dialogVm.delete = function () {
