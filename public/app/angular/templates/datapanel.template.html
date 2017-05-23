@@ -67,6 +67,11 @@
                 <input ng-model="dialogVm.data.type" type="text" ng-disabled="true">
               </md-input-container>
 
+              <md-input-container flex="33" layout-wrap ng-show="dialogVm.info.editType">
+                <label>Type</label>
+                <input ng-model="dialogVm.data.type" type="text">
+              </md-input-container>
+
 
               <!-- Groups -->
               <!-- Menu of groups -->

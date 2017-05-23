@@ -302,11 +302,28 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
         };
         loadPanel(data, info, DataFactory.addPoint);
       },
+      openSensorEditPanel : function(data) {
+        //Update For adding panel
+        data.date = "2017-05-16T10:55:00.000Z"; // Garbarge date to fill feild
+        info = {
+          title : "Sensor Editor",
+          accept : "Update",
+          content : "Edit Sensor Info",
+          editName : true,
+          selectType : true,
+          selectGroup : true,
+          hideDate : true,
+          hideValue : true
+        };
+        loadPanel(data, info, function(updatedData) {
+          console.log(updatedData);
+        });
+      },
       openNewSensorPanel : function() {
         info = {
-          title : "Point Editor",
+          title : "Sensor Editor",
           accept : "Create",
-          content : "Create Data Point",
+          content : "Create Sensor",
           disableDelete : true,
           hideID : true,
           hideDate : true,
