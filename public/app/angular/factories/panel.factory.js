@@ -5,8 +5,24 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
     dialogVm.groups = GroupFactory.getGroups();
     dialogVm.types = TypeFactory.getTypes();
 
+    dialogVm.tmp = {
+      name : dialogVm.data.name,
+      date : dialogVm.data.date,
+      value : dialogVm.data.value,
+      type : dialogVm.data.type,
+      group : dialogVm.data.group,
+      id : dialogVm.data.id
+    };
+    // dialogVm.tmp.value
+    // dialogVm.tmp.group
+    // dialogVm.tmp.type
+    // dialogVm.tmp.id
+
     //List of sensor names and there correspondng groups and type
     dialogVm.sensors = DataFactory.getMetaData();
+
+    //Copy by Value, so if live eidts are made to sensor they dont go to name
+    dialogVm.sensor = dialogVm.data.name;
 
     //dialogVm.panelForm = $scope.submitForm;
 
@@ -127,34 +143,29 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
     dialogVm.update = function () {
       //Validate data here
       if(dialogVm.panelForm.$valid) {
-        dialogVm.data.date = new Date(dialogVm.data.date).toISOString();
-        $mdDialog.hide(dialogVm.data);
+        dialogVm.tmp.date = new Date(dialogVm.tmp.date).toISOString();
+        $mdDialog.hide(dialogVm.tmp);
       }
     }
 
     dialogVm.delete = function () {
-      PanelFactory.openDeletePanel(dialogVm.data.name, dialogVm.data.id);
+      PanelFactory.openDeletePanel(dialogVm.tmp.name, dialogVm.tmp.id);
     }
 
     //Set Other fields(type and group) based on sensor chosen.
     dialogVm.setData = function() {
       var sensor = dialogVm.sensorData;
       for(var index in dialogVm.sensors)  {
-        if(dialogVm.sensors[index].name === dialogVm.data.name) {
-          dialogVm.data.type = dialogVm.sensors[index].type;
-          dialogVm.data.group = dialogVm.sensors[index].group;
+        if(dialogVm.sensors[index].name === dialogVm.tmp.name) {
+          dialogVm.tmp.type = dialogVm.sensors[index].type;
+          dialogVm.tmp.group = dialogVm.sensors[index].group;
         }
       }
     }
 
   })
 
-  .controller('PanelGroupEditController',function($mdDialog){
 
-  })
-  .controller('PanelTypeEditController',function($mdDialog){
-
-  })
   .factory('PanelFactory', function($mdDialog, DataFactory, GroupFactory, TypeFactory){
     var deletePanel = $mdDialog.confirm()
           .title('Delete Data Point')
