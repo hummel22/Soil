@@ -123,12 +123,13 @@ angular.module('soil.factory.data',['soil.factories.groups','soil.factories.type
           }
           return metaData;
         },
-        getMetaDataByName :function(name) {
+        getMetaDataByName : function(name) {
           return {
             name : name,
             type : dataset[name].type,
-            group : GroupFactory.getGroupByID(dataset[key].groupID),
-            groupID : dataset[key].groupID
+            typeID : dataset[name].typeID,
+            group : dataset[name].group,
+            groupID : dataset[name].groupID
           }
         },
         addMetaData : function(metaData)  {
@@ -144,6 +145,24 @@ angular.module('soil.factory.data',['soil.factories.groups','soil.factories.type
                 data : []
               }
           }
+        },
+        updateSensor : function(sensorOriginalName, data) {
+            if(sensorOriginalName in dataset) {
+              if(data.name !== sensorOriginalName)  {
+                dataset[data.name] = dataset[sensorOriginalName];
+                delete dataset[sensorOriginalName]
+              }
+              if(data.typeID !== dataset[data.name].typeID) {
+                dataset[data.name].typeID = data.typeID;
+                dataset[data.name].type = TypeFactory.getTypeByID(data.typeID);
+              }
+              if(data.groupID !== dataset[data.name].groupID) {
+                dataset[data.name].groupID = data.groupID;
+                dataset[data.name].group = GroupFactory.getGroupByID(data.groupID);
+              }
+              return this.getMetaDataByName(data.name);
+            }
+            return this.getMetaDataByName(sensorOriginalName);
         }
       }
   });

@@ -326,8 +326,13 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
           hideDate : true,
           hideValue : true
         };
-        loadPanel(data, info, function(updatedData) {
-          console.log(updatedData);
+        loadPanel(data, info, function(newData) {
+          var updatedData = DataFactory.updateSensor(data.name, newData);
+          data.name = updatedData.name;
+          data.type = updatedData.type;
+          data.typeID = updatedData.typeID;
+          data.group = updatedData.group;
+          data.groupID = updatedData.groupID;
         });
       },
       openNewSensorPanel : function() {
