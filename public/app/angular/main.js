@@ -6,5 +6,7 @@ var app = angular.module('SoilApp', [
 'soil.controllers.sidebar',
 'soil.controllers.adddialog',
 'soil.directives.datalistitem',
-'soil.directives.datalist'
+'soil.directives.datalist',
+'soil.factories.sensors',
+"soil.directives.sensorlist"
 ]);

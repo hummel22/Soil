@@ -1,71 +1,124 @@
-angular.module('soil.factory.data',['soil.factories.groups','soil.factories.types'])
-  .factory('DataFactory', function(GroupFactory, TypeFactory)  {
+angular.module('soil.factory.data',[])
+  .factory('DataFactory', function()  {
 
-    //tmp bock of data
-    var dataset = {
-      "SpinySensor" : {
-        name : "SpinySensor",
-        type : "Humidity",
-        typeID : 75798,
-        group : "WhitePot",
-        groupID : 25232,
-        dataID : 523233432,
-        data : [
-          {
+    datasets = new Map([
+      [ 12412231, new Map([
+        [
+          1235124345234 , {
+            datasetId : 12412231,
             id : 1235124345234,
             value : 100,
             date : "2017-05-16T10:55:00.000Z"
-          }, {
-            id : 1235124345235,
+          }
+        ], [
+          678596757, {
+            datasetId : 12412231,
+            id : 678596757,
             value : 85,
             date : "2017-05-16T10:57:00.000Z"
           }
-        ]
-      }
-    };
+        ]])
+      ], [
+        45742342, new Map([
+          [
+            5344574 , {
+              datasetId : 45742342,
+              id : 5344574,
+              value : 654,
+              date : "2017-05-16T10:23:00.000Z"
+            }
+          ], [
+            2342353454, {
+              datasetId : 45742342,
+              id : 2342353454,
+              value : 23,
+              date : "2017-05-16T10:10:00.000Z"
+            }
+          ]]
+        )]
+      ]);
 
 
+      /*
+      * Add a data point to the dataset.
+      * The data should be defined as
+      *   sensorId - The Id of the sensor this data is from
+      *   id - the id for this data Point
+      *   value - the value of the data Point
+      *   date - the date of the data point
+      */
       function addDataPoint(data) {
         //Does this sensor exist
-        if(!(data.name in dataset)) {
-          //didn't exist so add a new Point!
-          console.log("Sensor does not exist");
-          console.log(data);
-        } else {
-          dataset[data.name].data.push({value : data.value, date : data.date, id : data.id});
+        //Validate here
+        //Create a new data set if this does not exists
+        if(!datasets.has(data.datasetId)) {
+          datasets.set(data.datasetId, new Array());
         }
-          //Add to data to the end for now. may sort in future is there a std container?
-      };
-
-      //user is only allowed to chagned date and value
-      //Only call if verifed by
-      function updateDataPoint(data)  {
-        var sensorData = dataset[data.name].data;
-        for(var index in sensorData)  {
-          if(sensorData[index].id === data.id) {
-            sensorData[index].value = data.value;
-            sensorData[index].date = data.date;
-            break;
+        //make a new copy of the object in the the arary
+        datasets.get(data.datasetId).push(
+          {
+            datasetId : data.datasetId,
+            id : data.id,
+            value : data.value,
+            date : data.date
           }
-        }
+        );
       };
 
-      function isPoint(name, id)  {
-        if(name in dataset) {
-          var sensorData = dataset[name].data
-          for(var index in sensorData)  {
-            if(sensorData[index].id === id) {
-              return true;
+      /*
+      * Update a data point
+      * data should be in the form
+      *   sensorId - The Id of the sensor this data is from
+      *   id - the id for this data Point
+      *   value - the value of the data Point
+      *   date - the date of the data point
+      *
+      * Options
+      * - Move to different datasetId - TODO
+      * - Change id (BAD) - TODO
+      * - Change value or date.
+      */
+      function updateDataPoint(oldData, newData)  {
+        console.log(oldData.datasetId);
+        if(datasets.has(oldData.datasetId)) {
+          var dataset = datasets.get(oldData.datasetId)
+          if(dataset.has(oldData.id)) {
+            //check if sensor ID chagned
+            //check if id changed ?? Not allowed?
+            if(oldData.datasetId !== newData.datasetId || oldData.id !== newData.id)  {
+              //delete the data point and then just make a new one
+              deleteDataPoint(oldData);
+              addDataPoint(newData);
+            } else {
+              var dataPoint = dataset.get(oldData.id);
+              dataPoint.value = newData.value;
+              dataPoint.date = newData.date;
             }
+          } else {
+            console.log("Unable to update data point. Original data point not found: " + oldData.id);
           }
+
+        } else {
+          console.log("Unable to update data point. Original dataset not found: " + oldData.datasetId);
         }
-        return false;
       };
+
+      function deleteDataPoint(data)  {
+        if(datasets.has(data.datasetId)) {
+          datasets.get(data.datasetId).delete(data.id);
+        } else {
+          console.log("Unable to delete data point. Dataset does not exist: " + data.datasetId);
+        }
+      }
 
 
       return {
         getData : function () {
-          return dataset;
+          return datasets;
+        },
+
+        getDataById : function(id) {
+          return datasets.get(Number(id));
         },
 
         addPoint : function(data) {
@@ -76,93 +129,24 @@ angular.module('soil.factory.data',['soil.factories.groups','soil.factories.type
           addDataPoint(data);
         },
 
-        updatePoint : function (data) {
+        updatePoint : function (oldData, newData) {
           //TODO Update with service
+          // Get Real new data from service
           var addedSucces = true;
-          if(isPoint(data.name, data.id)) { //replace with service call
-            //If returns updated
-              //Update dataset
-              updateDataPoint(data);
-          } else if(addedSucces){
+          if(addedSucces){
             //If returns Created with ID
             //Addpoint
-            data.id = Math.floor(Math.random() * (1000000 - 0 + 1));
-            addDataPoint(data);
-          } else {
-            //TODO launch error dialog
-            //alert.error
+            //data.id = Math.floor(Math.random() * (1000000 - 0 + 1));
+            updateDataPoint(oldData, newData);
           }
         },
 
-        deletePoint : function(name, id)  {
-          //TODO delete with service
-          //If succesull delete from set
-          if(name in dataset) {
-            var sensorData = dataset[name].data
-            for(var index in sensorData)  {
-              if(sensorData[index].id === id) {
-                dataset[name].data.splice(index, 1);
-                break;
-              }
-            }
-          }
+        deletePoint : function(data)  {
+          deleteDataPoint(data);
         },
+
         printData : function () {
-          console.log(dataset);
-        },
-        getMetaData : function()  {
-          var metaData = [];
-          for(var key in dataset) {
-            metaData.push({
-              name : dataset[key].name,
-              type : TypeFactory.getTypeByID(dataset[key].typeID),
-              typeID : dataset[key].typeID,
-              group : GroupFactory.getGroupByID(dataset[key].groupID),
-              groupID : dataset[key].groupID
-            });
-          }
-          return metaData;
-        },
-        getMetaDataByName : function(name) {
-          return {
-            name : name,
-            type : dataset[name].type,
-            typeID : dataset[name].typeID,
-            group : dataset[name].group,
-            groupID : dataset[name].groupID
-          }
-        },
-        addMetaData : function(metaData)  {
-          if(metaData.name in dataset) {
-            console.log("Sensor already Exists");
-          } else {
-              dataset[metaData.name] = {
-                name : metaData.name,
-                type : metaData.type,
-                typeID : metaData.typeID,
-                group : metaData.group,
-                groupID : metaData.groupID,
-                data : []
-              }
-          }
-        },
-        updateSensor : function(sensorOriginalName, data) {
-            if(sensorOriginalName in dataset) {
-              if(data.name !== sensorOriginalName)  {
-                dataset[data.name] = dataset[sensorOriginalName];
-                delete dataset[sensorOriginalName]
-              }
-              if(data.typeID !== dataset[data.name].typeID) {
-                dataset[data.name].typeID = data.typeID;
-                dataset[data.name].type = TypeFactory.getTypeByID(data.typeID);
-              }
-              if(data.groupID !== dataset[data.name].groupID) {
-                dataset[data.name].groupID = data.groupID;
-                dataset[data.name].group = GroupFactory.getGroupByID(data.groupID);
-              }
-              return this.getMetaDataByName(data.name);
-            }
-            return this.getMetaDataByName(sensorOriginalName);
+          console.log(datasets);
         }
       }
   });

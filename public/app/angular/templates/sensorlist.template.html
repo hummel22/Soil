@@ -1,0 +1,11 @@
+<md-content layout="column" layout-align="center center" flex>
+  <md-content ng-repeat="dataPoint in sensorlistVm.dataset">
+    <sl-data-list-item
+      sl-sensor-id="sensorlistVm.sensor.sensorId"
+      sl-data-value="dataPoint[1].value"
+      sl-data-date="dataPoint[1].date"
+      sl-data-id="dataPoint[1].id"
+      sl-dataset-id="dataPoint[1].datasetId"
+></sl-data-list-item>
+  </md-content>
+</md-content>

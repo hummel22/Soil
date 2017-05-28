@@ -1,8 +1,10 @@
-angular.module("soil.directives.datalist",['soil.directives.datalistitem', 'soil.factory.data', 'soil.factories.panel'])
-  .controller('DataListController', function(DataFactory, PanelFactory){
+angular.module("soil.directives.datalist",["soil.directives.sensorlist", 'soil.factory.data', 'soil.factories.panel', 'soil.factories.sensors'])
+  .controller('DataListController', function(DataFactory, SensorFactory, PanelFactory){
     var datalistVm = this;
 
     datalistVm.data = DataFactory.getData();
+    datalistVm.sensors = SensorFactory.getSensors();  //This will miss new entries to the map
+    //TODO watch the map for new entries?
 
     datalistVm.addPointGen = function() {
       PanelFactory.openDataNewPanelGen();

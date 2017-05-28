@@ -1,10 +1,12 @@
-angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.groups','soil.factories.types'])
-  .controller('PanelDataEditController',function($scope, $mdDialog, PanelFactory, GroupFactory, TypeFactory, DataFactory){
+angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.groups','soil.factories.types','soil.factories.sensors'])
+  .controller('PanelDataEditController',function($scope, $mdDialog, PanelFactory, GroupFactory, TypeFactory, DataFactory, SensorFactory){
     var dialogVm = this;
 
+    //Data passed
+    //
     dialogVm.groups = GroupFactory.getGroups();
     dialogVm.types = TypeFactory.getTypes();
-
+    dialogVm.sensors = SensorFactory.getSensors();
     dialogVm.tmp = {
       name : dialogVm.data.name,
       date : dialogVm.data.date,
@@ -13,128 +15,8 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
       group : dialogVm.data.group,
       id : dialogVm.data.id
     };
-    // dialogVm.tmp.value
-    // dialogVm.tmp.group
-    // dialogVm.tmp.type
-    // dialogVm.tmp.id
-
-    //List of sensor names and there correspondng groups and type
-    dialogVm.sensors = DataFactory.getMetaData();
-
-    //Copy by Value, so if live eidts are made to sensor they dont go to name
+    //Copy by Value, so if live edits are made to sensor they dont go to name
     dialogVm.sensor = dialogVm.data.name;
-
-    //dialogVm.panelForm = $scope.submitForm;
-
-    //dialog.listItems - in view
-    dialogVm.newItemOrig = [];  //Map used  to overcome updates to new items;
-    //inf future use ids to replace all of this
-    dialogVm.list = {
-      newItems : [],
-      deleteItems : [],
-      updatedItems : {
-        origVals : [],
-        newVals : []
-      }
-    };
-
-     dialogVm.saveList = function() {
-        $mdDialog.hide(dialogVm.list);
-     };
-
-     function updateArray(array, oldVal, newVal)  {
-       var index = array.findIndex(function(element) {
-         return element === oldVal;
-       })
-       if(index !== undefined)  {
-         array[index] = newVal;
-         return true;
-       }
-       return false;
-     }
-
-     function getValue(array, oldVal) {
-       var index = array.findIndex(function(element) {
-         return element === oldVal;
-       })
-       return {
-         exists : function()  {
-           return index !== -1;
-         },
-         index : function() {
-           return index;
-         },
-         replace : function(newVal) {
-           if(index !== -1)  {
-             array[index] = newVal;
-             return true;
-           }
-           return false;
-         },
-         delete : function()  {
-           if(index !== -1)  {
-             array = array.splice(index, 1);
-           }
-         },
-         value : function() {
-           if(index !== -1)  {
-             return array[index];
-           }
-           return undefined;
-         }
-
-       }
-     }
-
-
-     dialogVm.updateItem = function(oldVal, newVal) {
-       //TODO no duplicates!!
-       //
-       //check to see if an original value has been updated
-       var alreadyChagned = getValue(dialogVm.list.updatedItems.origVals, oldVal);
-       if(alreadyChagned.exists()) {
-         //It has been changedIndex
-         dialogVm.list.updatedItems.newVals[alreadyChagned.index()] = newVal;
-       } else {
-         //Did a new itme get upadated
-         var isNew = getValue(dialogVm.newItemOrig, oldVal);
-         if(isNew.exists()) {
-           dialogVm.list.newItems[isNew.index()] = newVal;
-           //getValue(dialogVm.listItems, oldVal).replace(newVal);
-         } else {
-           var isOriginal = getValue(dialogVm.listItems, oldVal);
-           if(isOriginal.exists())  {
-             //It is and is had changed so lets add it to updatedItems
-             dialogVm.list.updatedItems.newVals.push(newVal);
-             dialogVm.list.updatedItems.origVals.push(oldVal);
-           }
-         }
-       }
-     };
-
-     dialogVm.addItem = function(val)  {
-       //TODO check duplicates
-       var isDup = getValue(dialogVm.listItems, val).exists();
-       if(!isDup)  {
-         dialogVm.list.newItems.push(val);
-         dialogVm.listItems.push(val);
-         dialogVm.newItemOrig.push(val);
-       }
-     }
-
-     dialogVm.deleteItem = function (val) {
-       getValue(dialogVm.listItems, val).delete();
-       var isNew = getValue(dialogVm.list.newItems, val);
-       if(isNew.exists()) {
-         dialogVm.newItemOrig = dialogVm.newItemOrig.splice(isNew.index(), 1);
-         isNew.delete();
-       } else {
-         dialogVm.list.deleteItems.push(val);
-       }
-       getValue(dialogVm.list.updatedItems.newVals, val).delete();
-       getValue(dialogVm.list.updatedItems.origVals, val).delete();
-
-   }
 
     dialogVm.close = function ()  {
       $mdDialog.cancel();
@@ -165,8 +47,121 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
 
   })
 
+  .controller('PanelListEditController',function($scope, $mdDialog){
+    var dialogVm = this;
 
-  .factory('PanelFactory', function($mdDialog, DataFactory, GroupFactory, TypeFactory){
+    //dialog.listItems - in view
+    dialogVm.newItemOrig = [];  //Map used  to overcome updates to new items;
+    //inf future use ids to replace all of this
+    dialogVm.list = {
+      newItems : [],
+      deleteItems : [],
+      updatedItems : {
+        origVals : [],
+        newVals : []
+      }
+    };
+
+    dialogVm.saveList = function() {
+       $mdDialog.hide(dialogVm.list);
+    };
+
+    function updateArray(array, oldVal, newVal)  {
+      var index = array.findIndex(function(element) {
+        return element === oldVal;
+      })
+      if(index !== undefined)  {
+        array[index] = newVal;
+        return true;
+      }
+      return false;
+    }
+
+    function getValue(array, oldVal) {
+      var index = array.findIndex(function(element) {
+        return element === oldVal;
+      })
+      return {
+        exists : function()  {
+          return index !== -1;
+        },
+        index : function() {
+          return index;
+        },
+        replace : function(newVal) {
+          if(index !== -1)  {
+            array[index] = newVal;
+            return true;
+          }
+          return false;
+        },
+        delete : function()  {
+          if(index !== -1)  {
+            array = array.splice(index, 1);
+          }
+        },
+        value : function() {
+          if(index !== -1)  {
+            return array[index];
+          }
+          return undefined;
+        }
+      }
+    }
+
+    dialogVm.updateItem = function(oldVal, newVal) {
+      //TODO no duplicates!!
+      //
+      //check to see if an original value has been updated
+      var alreadyChagned = getValue(dialogVm.list.updatedItems.origVals, oldVal);
+      if(alreadyChagned.exists()) {
+        //It has been changedIndex
+        dialogVm.list.updatedItems.newVals[alreadyChagned.index()] = newVal;
+      } else {
+        //Did a new itme get upadated
+        var isNew = getValue(dialogVm.newItemOrig, oldVal);
+        if(isNew.exists()) {
+          dialogVm.list.newItems[isNew.index()] = newVal;
+          //getValue(dialogVm.listItems, oldVal).replace(newVal);
+        } else {
+          var isOriginal = getValue(dialogVm.listItems, oldVal);
+          if(isOriginal.exists())  {
+            //It is and is had changed so lets add it to updatedItems
+            dialogVm.list.updatedItems.newVals.push(newVal);
+            dialogVm.list.updatedItems.origVals.push(oldVal);
+          }
+        }
+      }
+    };
+
+    dialogVm.addItem = function(val)  {
+      //TODO check duplicates
+      var isDup = getValue(dialogVm.listItems, val).exists();
+      if(!isDup)  {
+        dialogVm.list.newItems.push(val);
+        dialogVm.listItems.push(val);
+        dialogVm.newItemOrig.push(val);
+      }
+    }
+
+    dialogVm.deleteItem = function (val) {
+      getValue(dialogVm.listItems, val).delete();
+      var isNew = getValue(dialogVm.list.newItems, val);
+      if(isNew.exists()) {
+        dialogVm.newItemOrig = dialogVm.newItemOrig.splice(isNew.index(), 1);
+        isNew.delete();
+      } else {
+        dialogVm.list.deleteItems.push(val);
+      }
+      getValue(dialogVm.list.updatedItems.newVals, val).delete();
+      getValue(dialogVm.list.updatedItems.origVals, val).delete();
+  }
+
+
+  })
+
+
+  .factory('PanelFactory', function($mdDialog, DataFactory, GroupFactory, TypeFactory, SensorFactory){
     var deletePanel = $mdDialog.confirm()
           .title('Delete Data Point')
           .ariaLabel('Delete the data')
@@ -178,9 +173,8 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
     //Data to fill
     //Info to display in panel
     //Callback function returned on Create
+
     function loadPanel(data, info, callback) {
-      data.group = GroupFactory.getGroupByID(data.groupID);
-      data.type = TypeFactory.getTypeByID(data.typeID);
       $mdDialog.show({
               templateUrl: '/angular/templates/datapanel.template.html',
               parent: angular.element(document.body),
@@ -197,6 +191,7 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
         .then(function(rData){
           rData.groupID = GroupFactory.getIDByGroup(rData.group);
           rData.typeID = TypeFactory.getIDByType(rData.type);
+          rData.sensorId = SensorFactory.getSensorDataByName(rData.name).sensorId;
           callback(rData);
         }, function() {
           console.log("Cancelled");
@@ -224,10 +219,10 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
 
     //Factory Interface
     return {
-      openDeletePanel : function(name, id)  {
-        deletePanel._options.textContent = "Are you sure you want to delete data object " + id + " for sensor " +name+ "?";
+      openDeletePanel : function(data)  {
+        deletePanel._options.textContent = "Are you sure you want to delete data object " + data.id + " for sensor " + data.sensorName+ "?";
         $mdDialog.show(deletePanel).then(function() {
-          DataFactory.deletePoint(name, id);
+          DataFactory.deletePoint(data);
         }, function() {
           console.log("Canceled");
         });
@@ -242,7 +237,10 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
           disableType : true,
           disableID : true,
           disableDelete : false};
-        loadPanel(data, info, DataFactory.updatePoint);
+        loadPanel(data, info, function(rData) {
+          rData.datasetId = data.datasetId;
+          DataFactory.updatePoint(rData, rData);
+        });
       },
       opendGroupEditPanel : function()  {
         groups = GroupFactory.getGroups();
