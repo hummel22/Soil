@@ -220,7 +220,7 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
     //Factory Interface
     return {
       openDeletePanel : function(data)  {
-        deletePanel._options.textContent = "Are you sure you want to delete data object " + data.id + " for sensor " + data.sensorName+ "?";
+        deletePanel._options.textContent = "Are you sure you want to delete data object " + data.id + " for sensor " + data.name+ "?";
         $mdDialog.show(deletePanel).then(function() {
           DataFactory.deletePoint(data);
         }, function() {

@@ -1,42 +1,37 @@
 angular.module('soil.factory.data',[])
   .factory('DataFactory', function()  {
 
-    datasets = new Map([
-      [ 12412231, new Map([
-        [
-          1235124345234 , {
+    datasets = {
+      12412231 : {
+          1235124345234 : {
             datasetId : 12412231,
             id : 1235124345234,
             value : 100,
             date : "2017-05-16T10:55:00.000Z"
-          }
-        ], [
-          678596757, {
+          },
+          678596757 : {
             datasetId : 12412231,
             id : 678596757,
             value : 85,
             date : "2017-05-16T10:57:00.000Z"
           }
-        ]])
-      ], [
-        45742342, new Map([
-          [
-            5344574 , {
+        },
+        45742342 : {
+            5344574 : {
               datasetId : 45742342,
               id : 5344574,
               value : 654,
               date : "2017-05-16T10:23:00.000Z"
-            }
-          ], [
-            2342353454, {
+            },
+            2342353454 : {
               datasetId : 45742342,
               id : 2342353454,
               value : 23,
               date : "2017-05-16T10:10:00.000Z"
             }
-          ]]
-        )]
-      ]);
+          }
+        };
+
 
 
       /*
@@ -51,18 +46,16 @@ angular.module('soil.factory.data',[])
         //Does this sensor exist
         //Validate here
         //Create a new data set if this does not exists
-        if(!datasets.has(data.datasetId)) {
-          datasets.set(data.datasetId, new Array());
+        if(datasets[data.datasetId] === undefined) {
+          datasets[data.datasetId] = {};
         }
         //make a new copy of the object in the the arary
-        datasets.get(data.datasetId).push(
-          {
+        datasets[data.datasetId][data.id] = {
             datasetId : data.datasetId,
             id : data.id,
             value : data.value,
             date : data.date
-          }
-        );
+        };
       };
 
       /*
@@ -79,10 +72,9 @@ angular.module('soil.factory.data',[])
       * - Change value or date.
       */
       function updateDataPoint(oldData, newData)  {
-        console.log(oldData.datasetId);
-        if(datasets.has(oldData.datasetId)) {
-          var dataset = datasets.get(oldData.datasetId)
-          if(dataset.has(oldData.id)) {
+        if(datasets[oldData.datasetId] !== undefined) {
+          var dataset = datasets[oldData.datasetId]
+          if(dataset[oldData.id] !== undefined) {
             //check if sensor ID chagned
             //check if id changed ?? Not allowed?
             if(oldData.datasetId !== newData.datasetId || oldData.id !== newData.id)  {
@@ -90,7 +82,7 @@ angular.module('soil.factory.data',[])
               deleteDataPoint(oldData);
               addDataPoint(newData);
             } else {
-              var dataPoint = dataset.get(oldData.id);
+              var dataPoint = dataset[oldData.id];
               dataPoint.value = newData.value;
               dataPoint.date = newData.date;
             }
@@ -104,8 +96,8 @@ angular.module('soil.factory.data',[])
       };
 
       function deleteDataPoint(data)  {
-        if(datasets.has(data.datasetId)) {
-          datasets.get(data.datasetId).delete(data.id);
+        if(datasets[data.datasetId] !== undefined && datasets[data.datasetId][data.id] !== undefined) {
+          delete datasets[data.datasetId][data.id];
         } else {
           console.log("Unable to delete data point. Dataset does not exist: " + data.datasetId);
         }
@@ -118,7 +110,7 @@ angular.module('soil.factory.data',[])
         },
 
         getDataById : function(id) {
-          return datasets.get(Number(id));
+          return datasets[id];
         },
 
         addPoint : function(data) {

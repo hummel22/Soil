@@ -4,7 +4,6 @@ angular.module("soil.directives.datalist",["soil.directives.sensorlist", 'soil.f
 
     datalistVm.data = DataFactory.getData();
     datalistVm.sensors = SensorFactory.getSensors();  //This will miss new entries to the map
-    //TODO watch the map for new entries?
 
     datalistVm.addPointGen = function() {
       PanelFactory.openDataNewPanelGen();

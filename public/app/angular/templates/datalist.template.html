@@ -16,9 +16,9 @@
 
 
 <md-content layout="column" layout-align="center start" layout-gt-md="row" layout-align-gt-md="center start">
-  <md-content ng-repeat="sensor in datalistVm.sensors" flex>
-    <h1 flex>{{sensor.name}}</h1>
-    <sl-sensor-list sl-sensor="sensor" ng-if="sensor !== undefined">
+  <md-content ng-repeat="(sensorId, sensorData) in datalistVm.sensors" flex>
+    <h1 flex>{{sensorData.name}}</h1>
+    <sl-sensor-list sl-sensor="sensorData" ng-if="sensorData !== undefined">
     </sl-sensor-list>
   </md-content>
 

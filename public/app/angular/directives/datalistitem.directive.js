@@ -16,7 +16,6 @@ angular.module('soil.directives.datalistitem',['soil.factories.panel','soil.fact
     listitemVm.delete = function () {
       //open are you sure you want to delete that panel
       listitemVm.name = SensorFactory.getSensorById(listitemVm.sensorId).name; // For UX puposes
-      console.log(listitemVm.name)
       PanelFactory.openDeletePanel(listitemVm);
     }
     return this;

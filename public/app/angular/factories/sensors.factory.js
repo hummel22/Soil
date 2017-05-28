@@ -1,45 +1,49 @@
 angular.module('soil.factories.sensors',[])
   .factory('SensorFactory', function()  {
 
-    sensors = new Map([
-      [
-        2793423 , {
+    sensors = {
+        2793423 : {
           name : "SpinySensor",
           sensorId : 2793423,
           typeId : 75798,
           groupId : 25232,
           datasetId : 12412231
-        }
-      ], [
-        89792342 , {
+        },
+        89792342 : {
           name : "SmallSensor",
           sensorId :89792342,
           typeId : 75798,
           groupId : 25232,
           datasetId : 45742342
+        },
+        4745647 : {
+          name : "DupSensor",
+          sensorId :4745647,
+          typeId : 75798,
+          groupId : 25232,
+          datasetId : 45742342
         }
-      ]
-    ]);
+    };
 
     /*
     * Add Sensor Data to the list.
     *   No duplicate IDs allowed
     */
     function addSensorData(sensor)  {
-      sensors.set(sensor.id, sensor);
+      sensors[sensor.id] = sensor;
     }
 
     function deleteSensorData(sensor) {
-      sensors.delete(sensor.id);
+      delete sensors[sensor.id];
     }
 
     function updateSensorData(oldSensor, newSensor) {
-      if(sensors.has(oldSensor.id)) {
-        if(oldSensor.id !== newSensorID)  {
+      if(sensors[oldSensor.id] !== undefined) {
+        if(oldSensor.id !== newSensor.id)  {
           deleteSensorData(oldSensor);
           addSensorData(newSensor);
         } else {
-          var sensor = sensors.get(oldSensor.id);
+          var sensor = sensors[oldSensor.id];
           sensor.name = newSensor.name;
           sensor.typeId = newSensor.typeId;
           sensor.groupId = newSensor.groupId;
@@ -56,21 +60,21 @@ angular.module('soil.factories.sensors',[])
       },
 
       getSensors: function()  {
-        return Array.from(sensors.values());
+        return sensors;
       },
 
       getSensorDataByName : function(sensorName) {
-        for(var [sensorID, sensor] of sensors.entries())  {
-          if(sensor.name === sensorName)  {
-            return sensor;
+        for(var key in sensors)  {
+          if(sensors[key].name === sensorName)  {
+            return sensors[key];
           }
         }
-        console.log("Sensor Load Fila");
+        console.log("Sensor Load By Name Failed");
         return undefined;
       },
 
       getSensorById : function (id) {
-        return sensors.get(id);
+        return sensors[id];
       },
 
       addSensor : function(sensor)  {
