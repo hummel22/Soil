@@ -26,6 +26,7 @@ angular.module("soil.directives.datalist",["soil.directives.sensorlist", 'soil.f
     }
 
     datalistVm.editTypes = function()  {
+      console.log("Edit TYpes");
       PanelFactory.openTypeEditPanel();
     }
   })

@@ -7,16 +7,18 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
     dialogVm.groups = GroupFactory.getGroups();
     dialogVm.types = TypeFactory.getTypes();
     dialogVm.sensors = SensorFactory.getSensors();
-    dialogVm.tmp = {
-      name : dialogVm.data.name,
-      date : dialogVm.data.date,
-      value : dialogVm.data.value,
-      type : dialogVm.data.type,
-      group : dialogVm.data.group,
-      id : dialogVm.data.id
-    };
+      dialogVm.tmp = {
+        name : dialogVm.data.name,
+        date : dialogVm.data.date,
+        value : dialogVm.data.value,
+        type : dialogVm.data.type,
+        group : dialogVm.data.group,
+        id : dialogVm.data.id
+      };
+      dialogVm.sensor = dialogVm.data.name;
+
     //Copy by Value, so if live edits are made to sensor they dont go to name
-    dialogVm.sensor = dialogVm.data.name;
+
 
     dialogVm.close = function ()  {
       $mdDialog.cancel();
@@ -63,6 +65,7 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
     };
 
     dialogVm.saveList = function() {
+      console.log("Save List");
        $mdDialog.hide(dialogVm.list);
     };
 
@@ -202,7 +205,7 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
       $mdDialog.show({
               templateUrl: '/angular/templates/dialog-list.html',
               parent: angular.element(document.body),
-              controller: "PanelDataEditController",
+              controller: "PanelListEditController",
               controllerAs: 'dialogVm',
               bindToController: true,
               clickOutsideToClose: true,
