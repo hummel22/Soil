@@ -54,7 +54,7 @@
               <!-- Types -->
               <!-- Menu of Types -->
               <md-input-container flex="33" layout-wrap layout-wrap ng-show="!dialogVm.info.disableType">
-                <label>Type</label>
+                <label>Type {{dialogVm.tmp.type}}</label>
                 <md-select ng-model="dialogVm.tmp.type" required>
                   <md-option ng-repeat="type in dialogVm.types" ng-value="type">
                     {{type}}

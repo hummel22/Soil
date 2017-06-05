@@ -8,8 +8,9 @@ angular.module('soil.directives.datalistitem',['soil.factories.panel','soil.fact
 
       var sensor = SensorFactory.getSensorById(listitemVm.sensorId);
       listitemVm.name =sensor.name;
-      listitemVm.group = GroupFactory.getGroupByID(sensor.groupId);
-      listitemVm.type = TypeFactory.getTypeByID(sensor.typeId);
+      listitemVm.groupId = sensor.groupId;
+      listitemVm.typeId = sensor.typeId;
+      console.log(sensor);
       PanelFactory.openDataEditPanel(listitemVm);
     }
 

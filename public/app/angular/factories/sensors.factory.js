@@ -30,27 +30,32 @@ angular.module('soil.factories.sensors',[])
     *   No duplicate IDs allowed
     */
     function addSensorData(sensor)  {
-      sensors[sensor.id] = sensor;
+      sensors[sensor.sensorId] = sensor;
     }
 
     function deleteSensorData(sensor) {
-      delete sensors[sensor.id];
+      delete sensors[sensor.sensorId];
     }
 
     function updateSensorData(oldSensor, newSensor) {
-      if(sensors[oldSensor.id] !== undefined) {
-        if(oldSensor.id !== newSensor.id)  {
+      if(sensors[oldSensor.sensorId] !== undefined) {
+        if(oldSensor.sensorId !== newSensor.sensorId)  {
           deleteSensorData(oldSensor);
           addSensorData(newSensor);
         } else {
-          var sensor = sensors[oldSensor.id];
+          console.log("Update");
+          console.log(newSensor);
+
+          var sensor = sensors[oldSensor.sensorId];
           sensor.name = newSensor.name;
           sensor.typeId = newSensor.typeId;
           sensor.groupId = newSensor.groupId;
           sensor.datasetId = newSensor.datasetId;
+          console.log(sensor);
+
         }
       } else {
-        console.log("Unable to update sensor. Does not exist");
+        console.log("Unable to update sensor. Does not exist: ID " + oldSensor.sensorId );
       }
     }
 
@@ -80,7 +85,7 @@ angular.module('soil.factories.sensors',[])
       addSensor : function(sensor)  {
         //TODO Validate
         //TODO Service - get ID
-        sensor.id = Math.floor(Math.random() * (1000000 - 0 + 1));
+        sensor.sensorId = Math.floor(Math.random() * (1000000 - 0 + 1));
         addSensorData(sensor);
       },
       updateSensor : function(oldSensor, newSensor) {

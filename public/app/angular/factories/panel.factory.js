@@ -13,7 +13,9 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
         value : dialogVm.data.value,
         type : dialogVm.data.type,
         group : dialogVm.data.group,
-        id : dialogVm.data.id
+        id : dialogVm.data.id,
+        sensorId : dialogVm.data.sensorId,
+        datasetId : dialogVm.data.datasetId
       };
       dialogVm.sensor = dialogVm.data.name;
 
@@ -35,6 +37,7 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
     dialogVm.delete = function () {
       PanelFactory.openDeletePanel(dialogVm.tmp.name, dialogVm.tmp.id);
     }
+
 
     //Set Other fields(type and group) based on sensor chosen.
     dialogVm.setData = function() {
@@ -192,8 +195,8 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
               }
             })
         .then(function(rData){
-          rData.groupID = GroupFactory.getIDByGroup(rData.group);
-          rData.typeID = TypeFactory.getIDByType(rData.type);
+          rData.groupId = GroupFactory.getIDByGroup(rData.group);
+          rData.typeId = TypeFactory.getIDByType(rData.type);
           rData.sensorId = SensorFactory.getSensorDataByName(rData.name).sensorId;
           callback(rData);
         }, function() {
@@ -239,7 +242,12 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
           disableGroup : true,
           disableType : true,
           disableID : true,
-          disableDelete : false};
+          disableDelete : false
+        };
+        data.type = TypeFactory.getTypeByID(data.typeId);
+        data.group = GroupFactory.getGroupByID(data.groupId);
+        console.log("DATA***");
+        console.log(data);
         loadPanel(data, info, function(rData) {
           rData.datasetId = data.datasetId;
           DataFactory.updatePoint(rData, rData);
@@ -314,9 +322,8 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
         };
         loadPanel(data, info, DataFactory.addPoint);
       },
-      openSensorEditPanel : function(data) {
+      openSensorEditPanel : function(sensor) {
         //Update For adding panel
-        data.date = "2017-05-16T10:55:00.000Z"; // Garbarge date to fill feild
         info = {
           title : "Sensor Editor",
           accept : "Update",
@@ -324,16 +331,29 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
           editName : true,
           selectType : true,
           selectGroup : true,
+          disableID : true,
           hideDate : true,
           hideValue : true
         };
+        console.log(sensor);
+        var data = {
+          name : sensor.name,
+          type : TypeFactory.getTypeByID(sensor.typeId),
+          group : GroupFactory.getGroupByID(sensor.groupId),
+          id : sensor.sensorId,
+          datasetId : sensor.datasetId,
+          date : "2017-05-16T10:55:00.000Z" // Garbarge date to fill feild
+        }
+        console.log("**** CALCULATED ***");
+        console.log(data);
         loadPanel(data, info, function(newData) {
-          var updatedData = DataFactory.updateSensor(data.name, newData);
-          data.name = updatedData.name;
-          data.type = updatedData.type;
-          data.typeID = updatedData.typeID;
-          data.group = updatedData.group;
-          data.groupID = updatedData.groupID;
+
+          var updatedData = SensorFactory.updateSensor(sensor, newData);
+          // sensor.name = updatedData.name;
+          // sensor.type = updatedData.type;
+          // sensor.typeID = updatedData.typeID;
+          // sensor.group = updatedData.group;
+          // sensor.groupID = updatedData.groupID;
         });
       },
       openNewSensorPanel : function() {

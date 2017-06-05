@@ -16,8 +16,27 @@
 
 
 <md-content layout="column" layout-align="center start" layout-gt-md="row" layout-align-gt-md="center start">
+
+  <!-- Shos datasets that have been matched with an Sensor -->
   <md-content ng-repeat="(sensorId, sensorData) in datalistVm.sensors" flex>
-    <h1 flex>{{sensorData.name}}</h1>
+    <md-content layout="row" layout-align="center center" >
+      <h1 flex>{{sensorData.name}}</h1>
+      <md-button flex ng-click="datalistVm.editSensor(sensorData)" flex class="md-raised">
+          Edit
+      </md-button>
+    </md-content>
+    <sl-sensor-list sl-sensor="sensorData" ng-if="sensorData !== undefined">
+    </sl-sensor-list>
+  </md-content>
+
+  <!-- Show Unassigned Datasets -->
+  <md-content ng-repeat="(sensorId, sensorData) in datalistVm.unassignedData" flex>
+    <md-content layout="row" layout-align="center center" >
+      <h1 flex>{{sensorData.datasetId}} - Unassigned</h1>
+      <md-button flex ng-click="datalistVm.editSensor(sensorData)" flex class="md-raised">
+          Edit
+      </md-button>
+    </md-content>
     <sl-sensor-list sl-sensor="sensorData" ng-if="sensorData !== undefined">
     </sl-sensor-list>
   </md-content>

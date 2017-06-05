@@ -51,6 +51,7 @@ angular.module('soil.factories.groups' ,[])
         }
       },
       getGroupByID : function (id)  {
+        console.log("Seraching For GroupID: " + id);
         return groups.get(Number(id));
       },
       getIDByGroup : function(value) {
