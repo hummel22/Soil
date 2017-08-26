@@ -153,6 +153,13 @@ angular.module('soil.factory.data',[])
 
         printData : function () {
           console.log(datasets);
+        },
+        getDataSetIds : function () {
+          datasetIds = [];
+          for(var datasetId in datasets)  {
+            datasetIds.push(datasetId);
+          }
+          return datasetIds;
         }
       }
   });

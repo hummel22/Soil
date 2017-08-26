@@ -7,6 +7,7 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
     dialogVm.groups = GroupFactory.getGroups();
     dialogVm.types = TypeFactory.getTypes();
     dialogVm.sensors = SensorFactory.getSensors();
+    dialogVm.datasets = DataFactory.getDataSetIds();
       dialogVm.tmp = {
         name : dialogVm.data.name,
         date : dialogVm.data.date,
@@ -331,11 +332,11 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
           editName : true,
           selectType : true,
           selectGroup : true,
+          selectDataset : true,
           disableID : true,
           hideDate : true,
           hideValue : true
         };
-        console.log(sensor);
         var data = {
           name : sensor.name,
           type : TypeFactory.getTypeByID(sensor.typeId),
@@ -344,10 +345,7 @@ angular.module('soil.factories.panel',['soil.factory.data', 'soil.factories.grou
           datasetId : sensor.datasetId,
           date : "2017-05-16T10:55:00.000Z" // Garbarge date to fill feild
         }
-        console.log("**** CALCULATED ***");
-        console.log(data);
         loadPanel(data, info, function(newData) {
-
           var updatedData = SensorFactory.updateSensor(sensor, newData);
           // sensor.name = updatedData.name;
           // sensor.type = updatedData.type;

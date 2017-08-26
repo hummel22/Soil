@@ -94,6 +94,28 @@
                 <label>ID</label>
                 <input ng-model="dialogVm.tmp.id" type="text" ng-disabled="dialogVm.info.disableID">
               </md-input-container>
+
+
+
+              <!-- DataSets -->
+              <md-input-container flex="33" layout-wrap ng-show="dialogVm.info.selectDataset">
+                <label>Dataset ID</label>
+                <md-select ng-model="dialogVm.tmp.datasetId"  ng-required="dialogVm.info.selectDataset">
+                  <md-option ng-repeat="dataset in dialogVm.datasets" ng-value="dataset" >
+                    {{dataset}}
+                  </md-option>
+                </md-select>
+              </md-input-container>
+              <!-- Non Menu Uneditable Sensor - Used to Dispay sensor-->
+              <md-input-container flex="33" layout-wrap ng-show="dialogVm.info.editDataSet">
+                <label>Dataset ID</label>
+                <input ng-model="dialogVm.tmp.datasetId" type="text" required>
+              </md-input-container>
+              <!-- Non Menu Editable Sensor - Used to Create new Sensor Name-->
+              <md-input-container flex="33" layout-wrap ng-show="!dialogVm.info.selectDataset && !dialogVm.info.editDataSet">
+                <label>Dataset ID</label>
+                <input ng-model="dialogVm.tmp.datasetId" type="text" ng-disabled="true">
+              </md-input-container>
             </div>
           </div>
         </md-dialog-content>
